@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CalmScroll — Demo Feed</title>
+  <link rel="stylesheet" href="../shared/theme.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--color-bg);color:var(--color-ink);font-family:var(--font-sans);min-height:100vh;}
+
+    /* ── Top bar ── */
+    .topbar{position:sticky;top:0;z-index:10;background:var(--color-card);border-bottom:1px solid var(--color-line);padding:var(--sp-3) var(--sp-6);display:flex;align-items:center;gap:var(--sp-3);}
+    .topbar-logo{font-size:var(--text-base);font-weight:var(--weight-bold);color:var(--color-accent);}
+    .topbar-sub{font-size:var(--text-xs);color:var(--color-muted);}
+    .stats{margin-left:auto;display:flex;gap:var(--sp-4);font-size:var(--text-xs);color:var(--color-muted);}
+    .stat{display:flex;align-items:center;gap:var(--sp-1);}
+    .stat-val{font-weight:var(--weight-semibold);color:var(--color-ink);}
+
+    /* ── Feed layout ── */
+    .feed-wrap{max-width:640px;margin:0 auto;padding:var(--sp-6) var(--sp-4);}
+    h2.feed-head{font-size:var(--text-sm);font-weight:var(--weight-semibold);color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--sp-4);}
+
+    /* ── Post card ── */
+    .post{background:var(--color-card);border:1px solid var(--color-line);border-radius:var(--radius-lg);margin-bottom:var(--sp-4);overflow:hidden;transition:box-shadow var(--transition-fast);}
+    .post:hover{box-shadow:var(--shadow-md);}
+
+    .post-head{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-4) var(--sp-4) var(--sp-2);}
+    .avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .post-meta{display:flex;flex-direction:column;}
+    .post-author{font-size:var(--text-sm);font-weight:var(--weight-semibold);}
+    .post-time{font-size:var(--text-xs);color:var(--color-muted);}
+
+    .post-body{padding:var(--sp-2) var(--sp-4) var(--sp-4);font-size:var(--text-sm);line-height:var(--leading-loose);}
+
+    .post-actions{display:flex;gap:var(--sp-4);padding:var(--sp-2) var(--sp-4);border-top:1px solid var(--color-line);}
+    .act-btn{background:none;border:none;font-size:var(--text-xs);color:var(--color-muted);cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;gap:var(--sp-1);transition:color var(--transition-fast);}
+    .act-btn:hover{color:var(--color-accent);}
+
+    /* ── Shield overlay ── */
+    .post.shielded .post-body{display:none;}
+    .post.shielded .post-actions{display:none;}
+    .shield-bar{display:none;padding:var(--sp-3) var(--sp-4);border-top:1px solid var(--color-line);}
+    .post.shielded .shield-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-2);}
+    .shield-label{display:flex;align-items:center;gap:var(--sp-2);font-size:var(--text-xs);color:var(--color-muted);}
+    .shield-icon{font-size:var(--text-sm);}
+    .shield-reason{font-size:var(--text-xs);color:var(--color-muted);font-style:italic;}
+    .reveal-btn{background:none;border:1px solid var(--color-line);border-radius:var(--radius-sm);font-size:var(--text-xs);color:var(--color-muted);padding:2px var(--sp-2);cursor:pointer;font-family:var(--font-sans);transition:all var(--transition-fast);}
+    .reveal-btn:hover{border-color:var(--color-accent);color:var(--color-accent);}
+
+    /* ── Load more ── */
+    .load-more{text-align:center;margin-top:var(--sp-4);}
+    .load-btn{padding:var(--sp-3) var(--sp-6);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);font-size:var(--text-sm);color:var(--color-muted);font-family:var(--font-sans);cursor:pointer;transition:all var(--transition-fast);}
+    .load-btn:hover{border-color:var(--color-accent);color:var(--color-accent);}
+
+    /* ── Shield setting panel ── */
+    .settings-bar{background:var(--color-card);border-bottom:1px solid var(--color-line);padding:var(--sp-3) var(--sp-6);display:flex;align-items:center;gap:var(--sp-4);flex-wrap:wrap;}
+    .settings-bar label{display:flex;align-items:center;gap:var(--sp-2);font-size:var(--text-xs);color:var(--color-muted);cursor:pointer;}
+    .settings-bar input[type=checkbox]{accent-color:var(--color-accent);}
+    .settings-bar span.sep{color:var(--color-line);}
+    .settings-title{font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">🌿 CalmScroll</div>
+  <div class="topbar-sub">Demo Feed</div>
+  <div class="stats">
+    <div class="stat">Posts shielded: <span class="stat-val" id="statShielded">0</span></div>
+    <div class="stat">Shown: <span class="stat-val" id="statTotal">0</span></div>
+  </div>
+</div>
+
+<div class="settings-bar">
+  <span class="settings-title">Shield settings:</span>
+  <label><input type="checkbox" id="togRagebait" checked> Ragebait</label>
+  <label><input type="checkbox" id="togInsensitive" checked> Insensitive</label>
+  <label><input type="checkbox" id="togControversial" checked> Controversial</label>
+  <span class="sep">|</span>
+  <label><input type="checkbox" id="togPolitics" checked> Politics</label>
+  <label><input type="checkbox" id="togViolence" checked> Violence</label>
+  <label><input type="checkbox" id="togCelebrity" checked> Celebrity</label>
+  <label><input type="checkbox" id="togSports"> Sports</label>
+</div>
+
+<div class="feed-wrap">
+  <h2 class="feed-head">Your feed</h2>
+  <div id="feed"></div>
+  <div class="load-more">
+    <button class="load-btn" id="loadMore">Load more posts</button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════
+   Inline classifier — mirrors shared/rules logic
+   ══════════════════════════════════════════════════════════ */
+
+/* ── ragebait ── */
+function hasAllCapsRun(text){
+  var words = text.split(/\s+/);
+  var run = 0;
+  for(var i=0;i<words.length;i++){
+    var w = words[i].replace(/[^A-Za-z]/g,'');
+    if(w.length>=3 && w===w.toUpperCase() && /[A-Z]/.test(w)) run++;
+    else run=0;
+    if(run>=4) return true;
+  }
+  return false;
+}
+var RAGE_PATTERNS=[
+  /\bcan'?t believe\b/i,/\bthey (don'?t|won'?t) want you to know\b/i,
+  /\bwake up\b/i,/\bshare if you agree\b/i,/\btag (a|your) friend/i,
+  /\bwill make you (so )?angry\b/i,/\boutrage\b/i,
+  /\b(BOMBSHELL|EXPLOSIVE|SHOCKING|SCANDAL)\b/,
+  /\b(destroy|destroyed|obliterate|slammed|ripped|called out)\b/i,
+  /\bthey'?re (hiding|lying|corrupt)\b/i,
+];
+function checkRagebait(text){
+  var reasons=[];
+  if(hasAllCapsRun(text)) reasons.push('all-caps outrage run');
+  RAGE_PATTERNS.forEach(function(p){ if(p.test(text)) reasons.push('engagement/outrage bait'); });
+  reasons = Array.from(new Set(reasons));
+  return reasons.length ? {label:'ragebait',reasons:reasons} : null;
+}
+
+/* ── insensitive ── */
+var INSENS=[
+  {p:/\b(triggered|snowflakes?|libtards?|cucks?|soyboys?|NPCs?|sheep)\b/i, r:'dismissive or dehumanising slang'},
+  {p:/\b(go back to|doesn'?t belong here|not welcome)\b/i,                 r:'exclusionary directive'},
+  {p:/\b(had it coming|asked for it|brought it on (themselves|himself|herself))\b/i, r:'victim-blaming'},
+  {p:/\byour kind\b/i,                                                      r:'othering language'},
+  {p:/\bthey all\b/i,                                                       r:'broad generalisation'},
+];
+function checkInsensitive(text){
+  var reasons=[];
+  INSENS.forEach(function(rule){ if(rule.p.test(text)) reasons.push(rule.r); });
+  reasons=Array.from(new Set(reasons));
+  return reasons.length ? {label:'insensitive',reasons:reasons} : null;
+}
+
+/* ── controversial ── */
+var TOPICS={
+  politics:[/\b(election|democrat|republican|congress|senate|politician|vote|ballot|partisan|liberal|conservative|left-wing|right-wing|GOP|legislation|policy)\b/i],
+  religion:[/\b(mosque|church|temple|synagogue|prayer|religion|god|allah|jesus|bible|quran|atheist|faith|blasphemy|sermon)\b/i],
+  violence:[/\b(shooting|stabbing|bombing|murder|killed|dead|attack|massacre|riot|war|explosion|terrorist)\b/i],
+  celebrity:[/\b(drama|feud|beef|cancelled|cheating|divorce|celebrity|famous|paparazzi|scandal|exposed)\b/i],
+  sports:[/\b(Premier League|Super Bowl|NBA|NFL|FIFA|Champions League|match|tournament|game 7|injury|transfer)\b/i],
+};
+function checkControversial(text, selectedTopics){
+  if(!selectedTopics||!selectedTopics.length) return null;
+  var matched=[];
+  selectedTopics.forEach(function(t){
+    var pats=TOPICS[t]||[];
+    if(pats.some(function(p){return p.test(text);})) matched.push(t);
+  });
+  return matched.length ? {label:'controversial', reasons:matched.map(function(t){return 'topic: '+t;})} : null;
+}
+
+/* ── main classify ── */
+function classify(text, settings){
+  var t = text.trim();
+  if(settings.ragebait!==false){
+    var r=checkRagebait(t); if(r) return r;
+  }
+  if(settings.insensitive!==false){
+    var r2=checkInsensitive(t); if(r2) return r2;
+  }
+  if(settings.controversial!==false){
+    var topics=settings.topics||[];
+    var r3=checkControversial(t,topics); if(r3) return r3;
+  }
+  return {label:'clean',reasons:[]};
+}
+
+/* ══════════════════════════════════════════════════════════
+   Post data
+   ══════════════════════════════════════════════════════════ */
+var POSTS=[
+  {id:1,  avatar:'📚', author:'StudyWithAarav',    time:'2m ago',  content:"Just finished deriving the chain rule from scratch. If you're stuck, try working backwards from the product rule — it clicks instantly. Sharing my notes below 👇",                       likes:142, comments:18},
+  {id:2,  avatar:'😡', author:'TruthSeeker2026',   time:'5m ago',  content:"I CAN'T BELIEVE THEY'RE HIDING THIS FROM US. The media WILL NOT show you what's really happening. Share if you agree — they don't want you to know the truth. WAKE UP people!!", likes:892, comments:341},
+  {id:3,  avatar:'☕', author:'MorningCoder',      time:'8m ago',  content:"Hot take: writing documentation first (before code) makes you a better engineer. You have to understand the problem well enough to explain it. Tried it this week — genuinely helped.", likes:67, comments:22},
+  {id:4,  avatar:'🔥', author:'AngryPolitics',     time:'10m ago', content:"The senator was DESTROYED in this interview. Called out for corruption, completely SLAMMED. This EXPLOSIVE exchange will make you so angry. Retweet if you think he should resign!",      likes:1204,comments:567},
+  {id:5,  avatar:'🌱', author:'LearnEveryday',     time:'12m ago', content:"Reading 'A Mind For Numbers' and the chapter on procrastination is genuinely eye-opening. The Pomodoro technique isn't just productivity fluff — there's real neuroscience behind it.", likes:203, comments:34},
+  {id:6,  avatar:'😤', author:'RealTalk2026',      time:'15m ago', content:"These snowflakes can't handle real debate anymore. Triggered by everything. They all think the same way and your kind isn't welcome in serious discussions.",                               likes:445, comments:189},
+  {id:7,  avatar:'💡', author:'PhysicsNerd',       time:'18m ago', content:"Quantum entanglement visualised: imagine two coins that always land opposite sides no matter how far apart. That's not the physics, but it's the intuition. Real explanation in thread 🧵",   likes:311, comments:76},
+  {id:8,  avatar:'💥', author:'NewsAlert',         time:'20m ago', content:"BOMBSHELL: Shooting at the downtown mall leaves 3 dead, dozens injured. Witnesses say the attacker had been planning this for months. Developing story — riot warning issued.",                likes:2341,comments:980},
+  {id:9,  avatar:'🎓', author:'Aarav_Studies',     time:'22m ago', content:"Session 3/5 of my calculus series is live. Today: integration by parts with three worked examples. Timestamps in the description. Drop questions below!",                                    likes:88,  comments:15},
+  {id:10, avatar:'⚽', author:'FootballDaily',     time:'24m ago', content:"Champions League quarter-final: incredible match. Last-minute goal sends fans wild. Premier League star gets transferred for record fee. Game 7 vibes all over Europe tonight.",             likes:5621,comments:2341},
+  {id:11, avatar:'🧘', author:'MindfulDev',        time:'27m ago', content:"Reminder that being bored is OK. Your brain needs unstructured time to consolidate memories. That 'stuck' feeling is often just your hippocampus reorganising what you learned.",           likes:419, comments:53},
+  {id:12, avatar:'🗳️', author:'ElectionWatch',    time:'30m ago', content:"Breaking: Democrats and Republicans clash in Congress over new legislation. The Senate vote on the ballot initiative has partisan groups on both sides mobilising voters.",                    likes:788, comments:421},
+  {id:13, avatar:'🎨', author:'CreativeSpace',     time:'33m ago', content:"Colour theory tip: analogous colours (next to each other on the wheel) create harmony; complementary colours (opposite) create contrast. Start with analogous for calm designs.",            likes:156, comments:29},
+  {id:14, avatar:'🌟', author:'CelebGossip',       time:'35m ago', content:"DRAMA: A-list celebrity EXPOSED for cheating scandal. Divorce papers filed. The beef between them is getting worse by the hour — full paparazzi footage just leaked.",                        likes:9812,comments:3401},
+  {id:15, avatar:'🔭', author:'SpaceEnthusiast',   time:'40m ago', content:"The James Webb telescope has now imaged over 5,000 exoplanets. The data suggests rocky worlds are far more common than gas giants. This fundamentally changes our models of solar system formation.", likes:2189,comments:187},
+];
+
+var EXTRA_POSTS=[
+  {id:16, avatar:'😤', author:'OpinionHot',        time:'42m ago', content:"I CAN'T BELIEVE what the politicians are doing. This EXPLOSIVE congress vote will make you sick. Share if you agree we need change NOW. They don't want you to know!",                       likes:543, comments:201},
+  {id:17, avatar:'📖', author:'BookClub',          time:'44m ago', content:"Just finished 'Atomic Habits' for the second time. The chapter on identity-based habits is what changed things for me. Worth rereading annually.",                                          likes:312, comments:41},
+  {id:18, avatar:'😡', author:'TruthBombs',        time:'46m ago', content:"These libtards and NPCs have lost their minds. Your kind should go back to where you came from. Had it coming if you ask me. They all vote the same way anyway.",                              likes:229, comments:134},
+  {id:19, avatar:'🔬', author:'ScienceToday',      time:'50m ago', content:"New study: sleeping 7–9 hours doesn't just restore energy — it physically clears beta-amyloid plaques from the brain. Sleep is memory consolidation, not laziness.",                          likes:1876,comments:203},
+  {id:20, avatar:'💣', author:'BreakingAlert',     time:'52m ago', content:"BREAKING: Bombing at the central market. Police confirm terrorist attack. Massacre feared. At least 40 killed, hundreds injured. Riot warnings issued citywide. Developing.",                   likes:4201,comments:1890},
+];
+
+var shownPosts=0;
+var shieldedCount=0;
+
+function getSettings(){
+  return {
+    ragebait:   document.getElementById('togRagebait')   .checked,
+    insensitive:document.getElementById('togInsensitive') .checked,
+    controversial: document.getElementById('togControversial').checked,
+    topics: [
+      document.getElementById('togPolitics') .checked && 'politics',
+      document.getElementById('togViolence') .checked && 'violence',
+      document.getElementById('togCelebrity').checked && 'celebrity',
+      document.getElementById('togSports')   .checked && 'sports',
+    ].filter(Boolean),
+  };
+}
+
+function updateStats(){
+  document.getElementById('statShielded').textContent = shieldedCount;
+  document.getElementById('statTotal').textContent = shownPosts;
+}
+
+function makePost(data){
+  var settings = getSettings();
+  var result   = classify(data.content, settings);
+  var shielded = result.label !== 'clean';
+
+  shownPosts++;
+  if(shielded) shieldedCount++;
+  updateStats();
+
+  var article = document.createElement('article');
+  article.className = 'post' + (shielded ? ' shielded' : '');
+  article.setAttribute('data-post-id', data.id);
+
+  /* head */
+  var head = document.createElement('div'); head.className='post-head';
+  var av = document.createElement('div');
+  av.className='avatar';
+  av.style.background='var(--color-surface)';
+  av.textContent=data.avatar;
+  var meta = document.createElement('div'); meta.className='post-meta';
+  var author=document.createElement('span'); author.className='post-author'; author.textContent=data.author;
+  var time=document.createElement('span');   time.className='post-time';   time.textContent=data.time;
+  meta.appendChild(author); meta.appendChild(time);
+  head.appendChild(av); head.appendChild(meta);
+  article.appendChild(head);
+
+  /* body */
+  var body = document.createElement('div'); body.className='post-body'; body.textContent=data.content;
+  article.appendChild(body);
+
+  /* actions */
+  var actions=document.createElement('div'); actions.className='post-actions';
+  actions.innerHTML='<button class="act-btn">👍 '+data.likes+'</button><button class="act-btn">💬 '+data.comments+'</button><button class="act-btn">🔗 Share</button>';
+  article.appendChild(actions);
+
+  /* shield bar */
+  var bar=document.createElement('div'); bar.className='shield-bar';
+  var icons = {ragebait:'🚨', insensitive:'⚠️', controversial:'💬', clean:'✅'};
+  var labels = {ragebait:'Ragebait detected', insensitive:'Potentially insensitive', controversial:'Controversial topic', clean:'Clean'};
+  var lft=document.createElement('div'); lft.className='shield-label';
+  var ico=document.createElement('span'); ico.className='shield-icon'; ico.textContent=icons[result.label]||'🛡';
+  var rea=document.createElement('span'); rea.className='shield-reason';
+  rea.textContent=(labels[result.label]||result.label)+(result.reasons&&result.reasons.length?' — '+result.reasons[0]:'');
+  lft.appendChild(ico); lft.appendChild(rea);
+  var rev=document.createElement('button'); rev.className='reveal-btn'; rev.textContent='Show anyway';
+  rev.addEventListener('click',function(){
+    article.classList.remove('shielded');
+    rev.style.display='none';
+    shieldedCount = Math.max(0, shieldedCount-1);
+    updateStats();
+  });
+  bar.appendChild(lft); bar.appendChild(rev);
+  article.appendChild(bar);
+
+  return article;
+}
+
+function renderBatch(posts){
+  var feed = document.getElementById('feed');
+  posts.forEach(function(p){ feed.appendChild(makePost(p)); });
+}
+
+/* settings change → re-classify all existing posts */
+function reclassify(){
+  shieldedCount=0;
+  var settings=getSettings();
+  document.querySelectorAll('.post').forEach(function(article){
+    var id = parseInt(article.getAttribute('data-post-id'));
+    var data = POSTS.concat(EXTRA_POSTS).find(function(p){return p.id===id;});
+    if(!data) return;
+    var result=classify(data.content, settings);
+    var shielded=result.label!=='clean';
+    if(shielded){shieldedCount++; article.classList.add('shielded');}
+    else article.classList.remove('shielded');
+    /* update reason text */
+    var rea=article.querySelector('.shield-reason');
+    var labels={ragebait:'Ragebait detected',insensitive:'Potentially insensitive',controversial:'Controversial topic'};
+    if(rea) rea.textContent=(labels[result.label]||result.label)+(result.reasons&&result.reasons.length?' — '+result.reasons[0]:'');
+    /* reset reveal button */
+    var rev=article.querySelector('.reveal-btn');
+    if(rev) rev.style.display='';
+  });
+  updateStats();
+}
+
+/* init */
+document.addEventListener('DOMContentLoaded',function(){
+  renderBatch(POSTS);
+
+  document.getElementById('loadMore').addEventListener('click',function(){
+    renderBatch(EXTRA_POSTS);
+    document.getElementById('loadMore').style.display='none';
+  });
+
+  ['togRagebait','togInsensitive','togControversial','togPolitics','togViolence','togCelebrity','togSports'].forEach(function(id){
+    document.getElementById(id).addEventListener('change', reclassify);
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{
+  "manifest_version": 3,
+  "name": "CalmScroll",
+  "version": "0.2.0",
+  "description": "A calm, low-stimulation study companion that guards against distraction, ragebait, and endless scrolling.",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "CalmScroll",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "permissions": [
+    "storage",
+    "alarms",
+    "declarativeNetRequest",
+    "tabs",
+    "notifications"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://reddit.com/*",
+        "*://*.reddit.com/*",
+        "*://instagram.com/*",
+        "*://*.instagram.com/*",
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*",
+        "*://youtube.com/*",
+        "*://*.youtube.com/*",
+        "*://threads.net/*",
+        "*://*.threads.net/*",
+        "*://facebook.com/*",
+        "*://*.facebook.com/*",
+        "*://tiktok.com/*",
+        "*://*.tiktok.com/*",
+        "*://linkedin.com/*",
+        "*://*.linkedin.com/*"
+      ],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "warning.html",
+        "warning.js",
+        "reset.html",
+        "reset.js",
+        "payment.html",
+        "payment.js",
+        "demo/feed.html",
+        "shared/theme.css",
+        "shared/sound.js",
+        "content/content.css",
+        "images/quote1.svg",
+        "images/quote2.svg",
+        "images/quote3.svg",
+        "images/quote4.svg",
+        "images/quote5.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

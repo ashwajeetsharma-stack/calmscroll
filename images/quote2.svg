@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Golden sunrise forest gradient -->
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d0d1a"/>
+      <stop offset="30%" stop-color="#1a1040"/>
+      <stop offset="60%" stop-color="#5c2d0a"/>
+      <stop offset="80%" stop-color="#b8590a"/>
+      <stop offset="100%" stop-color="#e8903a"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="75%" r="40%">
+      <stop offset="0%" stop-color="rgba(255,200,80,0.9)"/>
+      <stop offset="30%" stop-color="rgba(255,140,40,0.4)"/>
+      <stop offset="70%" stop-color="rgba(180,60,0,0.1)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <linearGradient id="overlay2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.5)"/>
+      <stop offset="40%" stop-color="rgba(0,0,0,0.2)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.7)"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="800" fill="url(#sky2)"/>
+
+  <!-- Sunrise glow -->
+  <ellipse cx="600" cy="640" rx="500" ry="300" fill="url(#sun)"/>
+
+  <!-- Horizon glow band -->
+  <rect x="0" y="560" width="1200" height="60" fill="rgba(255,160,40,0.2)" filter="url(#softBlur)"/>
+
+  <!-- Far forest silhouette -->
+  <path d="M0,580 L50,520 L80,560 L120,490 L160,540 L200,480 L250,530 L300,470 L360,520 L410,460 L470,510 L530,455 L590,505 L640,450 L700,500 L760,445 L820,495 L880,440 L940,490 L1000,435 L1060,485 L1120,440 L1160,480 L1200,455 L1200,800 L0,800 Z" fill="#1a2515" opacity="0.9" filter="url(#softBlur)"/>
+
+  <!-- Mid forest -->
+  <path d="M0,640 L40,580 L70,620 L110,555 L150,600 L200,545 L250,590 L310,540 L370,585 L430,535 L490,578 L550,530 L610,572 L670,525 L730,570 L790,520 L850,565 L920,515 L980,558 L1040,510 L1100,555 L1150,520 L1200,550 L1200,800 L0,800 Z" fill="#111a0e" opacity="0.95"/>
+
+  <!-- Foreground ground -->
+  <path d="M0,740 Q300,700 600,720 Q900,740 1200,700 L1200,800 L0,800 Z" fill="#0a1008" opacity="1"/>
+
+  <!-- Overlay -->
+  <rect width="1200" height="800" fill="url(#overlay2)"/>
+
+  <!-- Decorative sparks/fireflies -->
+  <g fill="rgba(255,220,100,0.8)" filter="url(#glow2)">
+    <circle cx="200" cy="620" r="2"/>
+    <circle cx="350" cy="590" r="1.5"/>
+    <circle cx="480" cy="610" r="2.2"/>
+    <circle cx="750" cy="600" r="1.8"/>
+    <circle cx="900" cy="615" r="2"/>
+    <circle cx="1020" cy="595" r="1.6"/>
+  </g>
+
+  <!-- Quote label -->
+  <text x="600" y="250" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="rgba(255,200,100,0.7)" letter-spacing="5" font-style="italic">C A L M S C R O L L  ·  F O C U S</text>
+
+  <!-- Decorative line -->
+  <line x1="420" y1="275" x2="780" y2="275" stroke="rgba(255,180,60,0.4)" stroke-width="0.8"/>
+
+  <!-- Main quote -->
+  <text x="600" y="340" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="white" filter="url(#glow2)">
+    "Deep work is the
+  </text>
+  <text x="600" y="395" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="white" filter="url(#glow2)">
+    superpower of the
+  </text>
+  <text x="600" y="450" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="white" filter="url(#glow2)">
+    21st century."
+  </text>
+
+  <!-- Attribution -->
+  <line x1="420" y1="480" x2="780" y2="480" stroke="rgba(255,180,60,0.4)" stroke-width="0.8"/>
+  <text x="600" y="508" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="rgba(255,200,120,0.7)" font-style="italic">— Cal Newport · Deep Work</text>
+</svg>

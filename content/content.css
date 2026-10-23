@@ -1,0 +1,210 @@
+/* content/content.css — CalmScroll Post-Shield Content Script Styles */
+
+.calmscroll-shield-container {
+  margin: 12px 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.calmscroll-shield-card {
+  background: #F3F6F7 !important;
+  border: 1px solid #C9D6D8 !important;
+  border-left: 4px solid #1F6F6B !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  color: #14262B !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(20, 38, 43, 0.05) !important;
+  text-align: left !important;
+}
+
+.calmscroll-shield-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.calmscroll-shield-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #1F6F6B !important;
+  letter-spacing: 0.02em !important;
+}
+
+.calmscroll-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+.calmscroll-badge-ragebait {
+  background: #FCE8E6 !important;
+  color: #C5221F !important;
+  border: 1px solid #FAD2CF !important;
+}
+
+.calmscroll-badge-insensitive {
+  background: #FEF7E0 !important;
+  color: #B06000 !important;
+  border: 1px solid #FEEFC3 !important;
+}
+
+.calmscroll-badge-controversial {
+  background: #E8F0FE !important;
+  color: #1967D2 !important;
+  border: 1px solid #D2E3FC !important;
+}
+
+.calmscroll-shield-reason {
+  font-size: 13px !important;
+  color: #4A6168 !important;
+  line-height: 1.4 !important;
+}
+
+.calmscroll-shield-reason strong {
+  color: #14262B !important;
+}
+
+.calmscroll-shield-prompt {
+  font-size: 12px !important;
+  color: #6A8288 !important;
+  font-style: italic !important;
+  margin-top: 2px !important;
+}
+
+.calmscroll-shield-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 4px !important;
+}
+
+.calmscroll-btn-reveal {
+  background: #E4ECEC !important;
+  color: #14262B !important;
+  border: 1px solid #C9D6D8 !important;
+  border-radius: 6px !important;
+  padding: 5px 12px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  outline: none !important;
+}
+
+.calmscroll-btn-reveal:hover {
+  background: #1F6F6B !important;
+  color: #FFFFFF !important;
+  border-color: #1F6F6B !important;
+}
+
+.calmscroll-btn-hide {
+  background: transparent !important;
+  color: #6A8288 !important;
+  border: none !important;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+}
+
+.calmscroll-btn-hide:hover {
+  color: #14262B !important;
+  text-decoration: underline !important;
+}
+
+/* Original shielded post hiding */
+.calmscroll-hidden-content {
+  display: none !important;
+}
+
+/* Floating indicator in bottom corner */
+.calmscroll-floating-pill {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 999999 !important;
+  background: #1F6F6B !important;
+  color: #FFFFFF !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 6px 12px !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+  user-select: none !important;
+}
+
+.calmscroll-floating-pill:hover {
+  transform: translateY(-2px) !important;
+}
+
+.calmscroll-floating-pill.minimized {
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .calmscroll-shield-card {
+    background: #162024 !important;
+    border-color: #2D3D42 !important;
+    color: #E2ECEE !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+  }
+  .calmscroll-shield-reason {
+    color: #9DB4B8 !important;
+  }
+  .calmscroll-shield-reason strong {
+    color: #E2ECEE !important;
+  }
+  .calmscroll-shield-prompt {
+    color: #7B9498 !important;
+  }
+  .calmscroll-btn-reveal {
+    background: #233137 !important;
+    color: #E2ECEE !important;
+    border-color: #384C52 !important;
+  }
+  .calmscroll-btn-reveal:hover {
+    background: #1F6F6B !important;
+    color: #FFFFFF !important;
+  }
+  .calmscroll-badge-ragebait {
+    background: #441716 !important;
+    color: #F28B82 !important;
+    border-color: #5C2220 !important;
+  }
+  .calmscroll-badge-insensitive {
+    background: #423214 !important;
+    color: #FDD663 !important;
+    border-color: #5C451A !important;
+  }
+  .calmscroll-badge-controversial {
+    background: #172D4D !important;
+    color: #8AB4F8 !important;
+    border-color: #204170 !important;
+  }
+}

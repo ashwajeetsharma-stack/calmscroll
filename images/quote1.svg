@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Misty mountain forest gradient sky -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2a4a"/>
+      <stop offset="40%" stop-color="#2d4a7a"/>
+      <stop offset="70%" stop-color="#5c7fa6"/>
+      <stop offset="100%" stop-color="#8fb3c8"/>
+    </linearGradient>
+    <!-- Mist layer -->
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(200,220,240,0)" />
+      <stop offset="100%" stop-color="rgba(200,220,240,0.35)" />
+    </linearGradient>
+    <!-- Dark text overlay -->
+    <linearGradient id="overlay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.35)"/>
+      <stop offset="50%" stop-color="rgba(0,0,0,0.15)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.55)"/>
+    </linearGradient>
+    <filter id="blur1">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="800" fill="url(#sky)"/>
+
+  <!-- Stars -->
+  <g opacity="0.7">
+    <circle cx="120" cy="60" r="1.2" fill="white"/>
+    <circle cx="230" cy="30" r="0.8" fill="white"/>
+    <circle cx="380" cy="80" r="1.4" fill="white"/>
+    <circle cx="500" cy="20" r="0.9" fill="white"/>
+    <circle cx="650" cy="50" r="1.1" fill="white"/>
+    <circle cx="780" cy="35" r="0.7" fill="white"/>
+    <circle cx="900" cy="70" r="1.3" fill="white"/>
+    <circle cx="1050" cy="25" r="1.0" fill="white"/>
+    <circle cx="1150" cy="55" r="0.8" fill="white"/>
+    <circle cx="60" cy="110" r="0.6" fill="white"/>
+    <circle cx="320" cy="140" r="1.0" fill="white"/>
+    <circle cx="720" cy="100" r="0.7" fill="white"/>
+    <circle cx="980" cy="120" r="1.2" fill="white"/>
+  </g>
+
+  <!-- Background far mountains -->
+  <path d="M0,500 L100,340 L200,420 L350,280 L500,380 L650,260 L800,360 L950,290 L1100,370 L1200,310 L1200,800 L0,800 Z" fill="#1e3a5f" opacity="0.7" filter="url(#blur1)"/>
+
+  <!-- Mid mountains -->
+  <path d="M0,560 L150,400 L280,470 L420,350 L580,450 L700,360 L850,440 L1000,370 L1120,430 L1200,390 L1200,800 L0,800 Z" fill="#243f62" opacity="0.85"/>
+
+  <!-- Foreground hill silhouette -->
+  <path d="M0,680 Q200,580 400,640 Q600,700 800,630 Q1000,560 1200,650 L1200,800 L0,800 Z" fill="#0f1f35" opacity="0.95"/>
+
+  <!-- Pine tree silhouettes on hills -->
+  <g fill="#0a1520" opacity="0.9">
+    <!-- Left cluster -->
+    <polygon points="60,680 75,620 90,680"/>
+    <polygon points="80,680 97,610 114,680"/>
+    <polygon points="105,680 120,625 135,680"/>
+    <polygon points="130,680 143,635 156,680"/>
+    <!-- Center cluster -->
+    <polygon points="560,650 575,590 590,650"/>
+    <polygon points="580,650 597,578 614,650"/>
+    <polygon points="610,650 625,595 640,650"/>
+    <!-- Right cluster -->
+    <polygon points="1060,660 1075,600 1090,660"/>
+    <polygon points="1082,660 1099,588 1116,660"/>
+    <polygon points="1108,660 1123,605 1138,660"/>
+  </g>
+
+  <!-- Mist overlay -->
+  <rect width="1200" height="800" fill="url(#mist)"/>
+
+  <!-- Dark overlay for text readability -->
+  <rect width="1200" height="800" fill="url(#overlay)"/>
+
+  <!-- Moon -->
+  <circle cx="960" cy="110" r="42" fill="rgba(255,240,200,0.15)"/>
+  <circle cx="960" cy="110" r="34" fill="rgba(255,240,200,0.6)" filter="url(#glow)"/>
+
+  <!-- Quote text -->
+  <text x="600" y="335" text-anchor="middle" font-family="Georgia, serif" font-size="17" fill="rgba(255,255,255,0.55)" letter-spacing="4" font-style="italic">C A L M S C R O L L  ·  F O C U S</text>
+
+  <!-- Decorative line -->
+  <line x1="440" y1="360" x2="760" y2="360" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+
+  <text x="600" y="420" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" fill="white" font-weight="normal" filter="url(#glow)" letter-spacing="-0.5">
+    "Where your attention
+  </text>
+  <text x="600" y="478" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="46" fill="white" font-weight="normal" filter="url(#glow)">
+    goes, your life goes."
+  </text>
+
+  <!-- Attribution line -->
+  <line x1="440" y1="510" x2="760" y2="510" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
+  <text x="600" y="538" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="rgba(255,255,255,0.6)" font-style="italic">— Your future self is watching</text>
+</svg>

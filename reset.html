@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CalmScroll — 2-Minute Reset & Breathwork</title>
+  <link rel="stylesheet" href="shared/theme.css">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html,body{min-height:100%;font-family:var(--font-sans);}
+    body{background:var(--color-bg);color:var(--color-ink);display:flex;align-items:center;justify-content:center;padding:var(--sp-6);}
+
+    .card{max-width:480px;width:100%;background:var(--color-card);border:1px solid var(--color-line);border-radius:var(--radius-xl);padding:var(--sp-8);text-align:center;box-shadow:var(--shadow-lg);animation:fadeUp .3s ease;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+    .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-4);}
+    .brand{font-size:var(--text-sm);color:var(--color-accent);font-weight:var(--weight-bold);}
+    .audio-toggle{display:flex;align-items:center;gap:6px;font-size:var(--text-xs);color:var(--color-muted);background:var(--color-surface);border:1px solid var(--color-line);padding:3px 8px;border-radius:var(--radius-md);cursor:pointer;}
+    .audio-toggle:hover{border-color:var(--color-accent);color:var(--color-accent);}
+
+    h1{font-size:var(--text-2xl);font-weight:var(--weight-bold);margin-bottom:var(--sp-1);}
+    .sub{font-size:var(--text-sm);color:var(--color-muted);margin-bottom:var(--sp-6);line-height:var(--leading-base);}
+
+    /* Breathing & Timer Ring */
+    .ring-wrap{position:relative;width:170px;height:170px;margin:0 auto var(--sp-6);display:flex;align-items:center;justify-content:center;}
+    svg{position:absolute;inset:0;transform:rotate(-90deg);}
+    .ring-bg{fill:none;stroke:var(--color-surface);stroke-width:8;}
+    .ring-fg{fill:none;stroke:var(--color-accent);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .9s linear;}
+
+    /* Inner Breathing Circle */
+    .breath-circle{width:110px;height:110px;border-radius:50%;background:var(--color-surface);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 4s ease-in-out, background-color 0.5s ease;}
+    .breath-circle.inhale{transform:scale(1.22);background:var(--color-card);box-shadow:0 0 20px rgba(31,111,107,0.3);}
+    .breath-circle.hold{transform:scale(1.22);background:var(--color-card);}
+    .breath-circle.exhale{transform:scale(0.85);background:var(--color-surface);}
+    .breath-circle.rest{transform:scale(0.85);background:var(--color-surface);}
+
+    .breath-label{font-size:var(--text-xs);font-weight:var(--weight-bold);color:var(--color-accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px;}
+    .ring-txt{font-size:var(--text-lg);font-weight:var(--weight-bold);font-variant-numeric:tabular-nums;color:var(--color-ink);}
+
+    .breath-hint{font-size:var(--text-xs);color:var(--color-muted);margin-bottom:var(--sp-6);font-style:italic;}
+
+    /* next step commitment */
+    .next-wrap{text-align:left;margin-bottom:var(--sp-6);}
+    .next-lbl{font-size:var(--text-xs);font-weight:var(--weight-semibold);color:var(--color-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:var(--sp-2);}
+    textarea{width:100%;height:65px;padding:var(--sp-3);background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);color:var(--color-ink);font-size:var(--text-sm);font-family:var(--font-sans);resize:none;outline:none;transition:border-color var(--transition-fast);}
+    textarea:focus{border-color:var(--color-accent);}
+
+    /* done state */
+    .done-msg{display:none;background:var(--color-card);border:1px solid var(--color-accent);border-radius:var(--radius-lg);padding:var(--sp-5);margin-top:var(--sp-4);font-size:var(--text-sm);line-height:var(--leading-loose);color:var(--color-ink);animation:fadeUp .3s ease;}
+    .done-msg strong{display:block;font-size:var(--text-base);color:var(--color-accent);margin-bottom:var(--sp-2);}
+    .btn-back{margin-top:var(--sp-4);padding:var(--sp-3) var(--sp-6);background:var(--color-accent);border:none;border-radius:var(--radius-md);color:#fff;font-size:var(--text-sm);font-weight:var(--weight-semibold);font-family:var(--font-sans);cursor:pointer;transition:background var(--transition-fast);}
+    .btn-back:hover{background:var(--color-accent-hover);}
+
+    .blocked-note{margin-top:var(--sp-4);font-size:var(--text-xs);color:var(--color-muted);}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="top-bar">
+      <div class="brand">🌿 CalmScroll Reset</div>
+      <button class="audio-toggle" id="audioToggle">🌧️ Rain Noise: Off</button>
+    </div>
+
+    <h1>2-Minute Reset</h1>
+    <p class="sub">Lower cognitive stimulation. Sync your breath. Reset your focus.</p>
+
+    <div class="ring-wrap">
+      <svg viewBox="0 0 170 170" width="170" height="170">
+        <circle class="ring-bg" cx="85" cy="85" r="75"/>
+        <circle class="ring-fg" id="ringFg" cx="85" cy="85" r="75"/>
+      </svg>
+      <div class="breath-circle" id="breathCircle">
+        <div class="breath-label" id="breathLabel">Inhale</div>
+        <div class="ring-txt" id="ringTxt">2:00</div>
+      </div>
+    </div>
+
+    <div class="breath-hint" id="breathHint">Follow the circle: Inhale 4s • Hold 4s • Exhale 4s • Rest 4s</div>
+
+    <div class="next-wrap" id="nextWrap">
+      <div class="next-lbl">Write down one small next physical action:</div>
+      <textarea id="nextStep" placeholder="e.g. Open the chapter notes and read the first paragraph…"></textarea>
+    </div>
+
+    <div class="done-msg" id="doneMsg">
+      <strong>✅ Reset Complete.</strong>
+      <span>Your stated next action: <em id="stepEcho">continue studying</em></span>
+      <br><br>
+      Your focus session is guarded and ready.
+      <br>
+      <button class="btn-back" id="btnBack">← Return to Work</button>
+      <div class="blocked-note">Distracting sites remain safely blocked.</div>
+    </div>
+  </div>
+
+  <script src="shared/sound.js"></script>
+  <script src="reset.js"></script>
+</body>
+</html>

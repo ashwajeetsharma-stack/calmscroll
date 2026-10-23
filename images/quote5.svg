@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Deep purple-indigo starry sky -->
+    <linearGradient id="cosmicBg" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#05050f"/>
+      <stop offset="30%" stop-color="#0c0c25"/>
+      <stop offset="60%" stop-color="#14103a"/>
+      <stop offset="85%" stop-color="#1c1250"/>
+      <stop offset="100%" stop-color="#0a0818"/>
+    </linearGradient>
+    <radialGradient id="nebula" cx="60%" cy="35%" r="45%">
+      <stop offset="0%" stop-color="rgba(120,60,180,0.3)"/>
+      <stop offset="40%" stop-color="rgba(60,30,120,0.15)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <radialGradient id="nebula2" cx="25%" cy="65%" r="35%">
+      <stop offset="0%" stop-color="rgba(30,80,160,0.25)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <linearGradient id="overlay5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.4)"/>
+      <stop offset="50%" stop-color="rgba(0,0,0,0.1)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.65)"/>
+    </linearGradient>
+    <filter id="glow5">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="starGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#cosmicBg)"/>
+  <rect width="1200" height="800" fill="url(#nebula)"/>
+  <rect width="1200" height="800" fill="url(#nebula2)"/>
+
+  <!-- Milky way band (diagonal) -->
+  <path d="M0,600 Q300,400 600,300 Q900,200 1200,50 L1200,200 Q900,350 600,440 Q300,540 0,740 Z" fill="rgba(200,180,255,0.05)"/>
+
+  <!-- Stars — many small -->
+  <g fill="white">
+    <circle cx="30" cy="25" r="0.8" opacity="0.9"/>
+    <circle cx="90" cy="55" r="1.2" opacity="0.8" filter="url(#starGlow)"/>
+    <circle cx="145" cy="18" r="0.7" opacity="0.7"/>
+    <circle cx="200" cy="80" r="1.0" opacity="0.9"/>
+    <circle cx="275" cy="35" r="0.6" opacity="0.8"/>
+    <circle cx="340" cy="70" r="1.4" opacity="0.9" filter="url(#starGlow)"/>
+    <circle cx="410" cy="22" r="0.8" opacity="0.7"/>
+    <circle cx="480" cy="60" r="1.1" opacity="0.85"/>
+    <circle cx="540" cy="40" r="0.7" opacity="0.9"/>
+    <circle cx="620" cy="15" r="1.3" opacity="0.8" filter="url(#starGlow)"/>
+    <circle cx="680" cy="75" r="0.9" opacity="0.75"/>
+    <circle cx="750" cy="30" r="0.7" opacity="0.9"/>
+    <circle cx="820" cy="65" r="1.2" opacity="0.85" filter="url(#starGlow)"/>
+    <circle cx="890" cy="20" r="0.8" opacity="0.8"/>
+    <circle cx="960" cy="55" r="1.0" opacity="0.9"/>
+    <circle cx="1030" cy="35" r="0.7" opacity="0.75"/>
+    <circle cx="1100" cy="70" r="1.3" opacity="0.85" filter="url(#starGlow)"/>
+    <circle cx="1160" cy="25" r="0.9" opacity="0.9"/>
+    <!-- Second row -->
+    <circle cx="60" cy="130" r="0.7" opacity="0.6"/>
+    <circle cx="170" cy="150" r="1.1" opacity="0.75"/>
+    <circle cx="310" cy="120" r="0.8" opacity="0.8"/>
+    <circle cx="460" cy="145" r="0.6" opacity="0.7"/>
+    <circle cx="600" cy="115" r="1.0" opacity="0.85"/>
+    <circle cx="740" cy="140" r="0.7" opacity="0.7"/>
+    <circle cx="880" cy="125" r="1.2" opacity="0.8"/>
+    <circle cx="1020" cy="155" r="0.8" opacity="0.75"/>
+    <circle cx="1140" cy="130" r="0.6" opacity="0.65"/>
+    <!-- Scattered -->
+    <circle cx="130" cy="200" r="0.9" opacity="0.6"/>
+    <circle cx="380" cy="185" r="0.7" opacity="0.7"/>
+    <circle cx="550" cy="210" r="1.1" opacity="0.65"/>
+    <circle cx="760" cy="195" r="0.6" opacity="0.6"/>
+    <circle cx="950" cy="205" r="0.8" opacity="0.7"/>
+    <circle cx="1070" cy="215" r="0.7" opacity="0.6"/>
+  </g>
+
+  <!-- Horizon silhouette - rugged mountain ridge -->
+  <path d="M0,650 L80,560 L160,620 L240,520 L330,580 L420,490 L510,555 L610,470 L700,540 L800,460 L880,525 L970,455 L1060,510 L1150,470 L1200,490 L1200,800 L0,800 Z" fill="#0a080d" opacity="0.95"/>
+
+  <!-- Overlay -->
+  <rect width="1200" height="800" fill="url(#overlay5)"/>
+
+  <!-- Label -->
+  <text x="600" y="260" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="rgba(180,160,220,0.7)" letter-spacing="5" font-style="italic">C A L M S C R O L L  ·  F O C U S</text>
+  <line x1="380" y1="284" x2="820" y2="284" stroke="rgba(180,160,220,0.35)" stroke-width="0.8"/>
+
+  <!-- Main quote -->
+  <text x="600" y="345" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="white" filter="url(#glow5)">"Focus is not about</text>
+  <text x="600" y="397" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="white" filter="url(#glow5)">saying yes — it is about</text>
+  <text x="600" y="449" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="white" filter="url(#glow5)">saying no to a</text>
+  <text x="600" y="501" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="white" filter="url(#glow5)">thousand things."</text>
+
+  <!-- Attribution -->
+  <line x1="380" y1="530" x2="820" y2="530" stroke="rgba(180,160,220,0.35)" stroke-width="0.8"/>
+  <text x="600" y="558" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="rgba(180,160,220,0.75)" font-style="italic">— Steve Jobs · Stay focused.</text>
+</svg>

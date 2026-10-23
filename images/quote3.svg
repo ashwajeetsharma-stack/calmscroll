@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <!-- Deep teal ocean twilight -->
+    <linearGradient id="ocean-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="45%" stop-color="#0e2545"/>
+      <stop offset="65%" stop-color="#1a4a6b"/>
+      <stop offset="80%" stop-color="#2a6880"/>
+      <stop offset="100%" stop-color="#1a3d55"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e5070"/>
+      <stop offset="100%" stop-color="#0d2035"/>
+    </linearGradient>
+    <radialGradient id="moonRefl" cx="50%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="rgba(200,230,255,0.3)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+    <linearGradient id="overlay3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(0,0,0,0.45)"/>
+      <stop offset="50%" stop-color="rgba(0,0,0,0.1)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.6)"/>
+    </linearGradient>
+    <filter id="glow3">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="waveBlur">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="800" fill="url(#ocean-sky)"/>
+
+  <!-- Stars -->
+  <g fill="white" opacity="0.6">
+    <circle cx="80" cy="40" r="1.1"/><circle cx="190" cy="70" r="0.8"/>
+    <circle cx="300" cy="30" r="1.3"/><circle cx="440" cy="55" r="0.7"/>
+    <circle cx="570" cy="25" r="1.0"/><circle cx="700" cy="60" r="0.9"/>
+    <circle cx="820" cy="35" r="1.2"/><circle cx="950" cy="50" r="0.8"/>
+    <circle cx="1080" cy="28" r="1.1"/><circle cx="1150" cy="65" r="0.9"/>
+    <circle cx="150" cy="120" r="0.6"/><circle cx="400" cy="130" r="0.8"/>
+    <circle cx="660" cy="110" r="0.7"/><circle cx="880" cy="125" r="0.6"/>
+    <circle cx="1030" cy="105" r="0.9"/>
+  </g>
+
+  <!-- Moon -->
+  <circle cx="850" cy="130" r="50" fill="rgba(220,235,255,0.12)"/>
+  <circle cx="850" cy="130" r="38" fill="rgba(220,235,255,0.75)" filter="url(#glow3)"/>
+
+  <!-- Moon halo ring -->
+  <circle cx="850" cy="130" r="60" fill="none" stroke="rgba(200,220,255,0.15)" stroke-width="20"/>
+
+  <!-- Horizon / sea boundary -->
+  <rect x="0" y="500" width="1200" height="300" fill="url(#water)"/>
+
+  <!-- Water shine / moon reflection -->
+  <ellipse cx="600" cy="520" rx="300" ry="30" fill="url(#moonRefl)" opacity="0.6"/>
+
+  <!-- Gentle wave lines -->
+  <g stroke="rgba(100,180,220,0.2)" stroke-width="1.2" fill="none" filter="url(#waveBlur)">
+    <path d="M0,530 Q150,520 300,535 Q450,550 600,535 Q750,520 900,535 Q1050,550 1200,535"/>
+    <path d="M0,558 Q200,545 400,562 Q600,579 800,562 Q1000,545 1200,558"/>
+    <path d="M0,585 Q180,572 360,588 Q540,604 720,588 Q900,572 1080,588 Q1140,591 1200,585"/>
+    <path d="M0,615 Q220,602 440,618 Q660,634 880,618 Q1040,608 1200,615"/>
+    <path d="M0,648 Q200,635 400,651 Q600,667 800,651 Q1000,635 1200,648"/>
+    <path d="M0,685 Q180,672 360,688 Q540,704 720,688 Q900,672 1080,688 Q1140,691 1200,685"/>
+  </g>
+
+  <!-- Moonlight shimmer column on water -->
+  <path d="M550,502 L580,800 L620,800 L650,502 Z" fill="rgba(200,230,255,0.06)"/>
+  <path d="M565,502 L588,800 L612,800 L635,502 Z" fill="rgba(200,230,255,0.08)"/>
+
+  <!-- Overlay -->
+  <rect width="1200" height="800" fill="url(#overlay3)"/>
+
+  <!-- Label -->
+  <text x="600" y="240" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="rgba(180,210,240,0.7)" letter-spacing="5" font-style="italic">C A L M S C R O L L  ·  F O C U S</text>
+  <line x1="420" y1="265" x2="780" y2="265" stroke="rgba(180,210,240,0.35)" stroke-width="0.8"/>
+
+  <!-- Main quote -->
+  <text x="600" y="330" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="white" filter="url(#glow3)">"Action precedes</text>
+  <text x="600" y="385" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="white" filter="url(#glow3)">motivation, not the</text>
+  <text x="600" y="440" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" fill="white" filter="url(#glow3)">other way around."</text>
+
+  <!-- Attribution -->
+  <line x1="420" y1="468" x2="780" y2="468" stroke="rgba(180,210,240,0.35)" stroke-width="0.8"/>
+  <text x="600" y="496" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="rgba(180,210,240,0.75)" font-style="italic">— Just begin. The rest follows.</text>
+</svg>

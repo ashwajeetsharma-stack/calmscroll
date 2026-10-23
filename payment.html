@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CalmScroll — Razorpay Secure Checkout</title>
+  <link rel="stylesheet" href="shared/theme.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      min-height: 100vh;
+      font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+      background: #0D1117;
+      color: #E6EDF3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 24px 16px;
+    }
+
+    /* ── Top Header ── */
+    .header-bar {
+      width: 100%;
+      max-width: 860px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: #10B981;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: -0.02em;
+    }
+    .brand-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10B981;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    .rzp-seal {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #8B949E;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .rzp-badge {
+      color: #528FF0;
+      font-weight: 700;
+    }
+
+    /* ── Checkout Container ── */
+    .checkout-container {
+      width: 100%;
+      max-width: 860px;
+      display: grid;
+      grid-template-columns: 1.05fr 1.35fr;
+      gap: 24px;
+      background: #161B22;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+    }
+
+    @media (max-width: 768px) {
+      .checkout-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Left Column: Plan Summary ── */
+    .summary-col {
+      background: #12161D;
+      padding: 28px 24px;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-direction: column;
+    }
+    .sum-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #8B949E;
+      margin-bottom: 12px;
+    }
+    .item-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .item-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #7C3AED, #A855F7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.35);
+    }
+    .item-details h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 2px;
+    }
+    .item-details p {
+      font-size: 12px;
+      color: #8B949E;
+    }
+
+    /* Plan Picker */
+    .plan-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .plan-opt {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .plan-opt:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+    .plan-opt.active {
+      background: rgba(124, 58, 237, 0.15);
+      border-color: #A855F7;
+      box-shadow: 0 0 0 1px #A855F7;
+    }
+    .plan-opt-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .plan-radio {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #6E7681;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .plan-opt.active .plan-radio {
+      border-color: #A855F7;
+    }
+    .plan-opt.active .plan-radio::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #A855F7;
+      border-radius: 50%;
+    }
+    .plan-opt-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    .plan-opt-sub {
+      font-size: 11px;
+      color: #8B949E;
+    }
+    .plan-opt-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: #E6EDF3;
+    }
+    .badge-pop {
+      position: absolute;
+      top: -7px;
+      right: 12px;
+      background: linear-gradient(90deg, #F59E0B, #EA580C);
+      color: #FFFFFF;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Benefits list */
+    .benefits-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 24px;
+    }
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #C9D1D9;
+      margin-bottom: 6px;
+    }
+    .benefit-item:last-child { margin-bottom: 0; }
+    .b-check { color: #10B981; font-weight: bold; }
+
+    /* Price breakdown */
+    .price-breakdown {
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: #8B949E;
+      margin-bottom: 8px;
+    }
+    .price-row.total {
+      font-size: 17px;
+      font-weight: 800;
+      color: #FFFFFF;
+      border-top: 1px dashed rgba(255, 255, 255, 0.15);
+      padding-top: 12px;
+      margin-bottom: 0;
+    }
+    .price-row.total span:last-child {
+      color: #10B981;
+    }
+
+    /* ── Right Column: Payment Gateway ── */
+    .gateway-col {
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .gateway-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .gateway-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+    .sec-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #10B981;
+      font-weight: 600;
+    }
+
+    /* Tabs */
+    .pay-methods-tabs {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .method-tab {
+      flex: 1;
+      padding: 8px 6px;
+      border: none;
+      background: transparent;
+      color: #8B949E;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .method-tab:hover {
+      color: #FFFFFF;
+    }
+    .method-tab.active {
+      background: #7C3AED;
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.4);
+    }
+
+    /* Tab Panes */
+    .tab-content-area {
+      flex: 1;
+    }
+    .pay-pane {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeIn 0.2s ease;
+    }
+    .pay-pane.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* UPI Pane */
+    .upi-apps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .upi-app-btn {
+      padding: 10px 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #E6EDF3;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .upi-app-btn:hover, .upi-app-btn.selected {
+      border-color: #7C3AED;
+      background: rgba(124, 58, 237, 0.12);
+    }
+    .upi-icon-circle {
+      font-size: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #8B949E;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      color: #FFFFFF;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .input-field:focus {
+      border-color: #7C3AED;
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.25);
+    }
+
+    /* QR Code Display */
+    .qr-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+    }
+    .qr-graphic {
+      width: 76px;
+      height: 76px;
+      background: #FFFFFF;
+      border-radius: 8px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+    .qr-info h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 2px;
+    }
+    .qr-info p {
+      font-size: 11px;
+      color: #8B949E;
+      line-height: 1.4;
+    }
+
+    /* Card Pane */
+    .card-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Netbanking Pane */
+    .bank-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .bank-btn {
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #E6EDF3;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .bank-btn:hover, .bank-btn.selected {
+      border-color: #7C3AED;
+      background: rgba(124, 58, 237, 0.15);
+    }
+
+    /* Razorpay Payment Link custom tab */
+    .link-pane-info {
+      font-size: 12px;
+      color: #8B949E;
+      line-height: 1.5;
+      background: rgba(82, 143, 240, 0.08);
+      border: 1px solid rgba(82, 143, 240, 0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    /* Submit CTA */
+    .pay-cta-btn {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background: linear-gradient(90deg, #10B981, #059669);
+      border: none;
+      border-radius: 10px;
+      color: #FFFFFF;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.35);
+    }
+    .pay-cta-btn:hover {
+      background: linear-gradient(90deg, #059669, #047857);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(16, 185, 129, 0.45);
+    }
+    .pay-cta-btn:active {
+      transform: translateY(0);
+    }
+
+    .footer-guarantee {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 11px;
+      color: #6E7681;
+    }
+
+    /* ── Overlay Modal for Processing & Success ── */
+    .process-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+    .process-card {
+      background: #161B22;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 32px 24px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 52px;
+      height: 52px;
+      border: 4px solid rgba(124, 58, 237, 0.2);
+      border-top-color: #A855F7;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 18px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Success Icon */
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid #10B981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: #10B981;
+      margin: 0 auto 16px;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.4);
+    }
+
+    .modal-btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      background: #7C3AED;
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .modal-btn:hover {
+      background: #6D28D9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header class="header-bar">
+    <div class="brand-wrap">
+      <span class="brand-logo">🌿 CalmScroll</span>
+      <span class="brand-tag">PREMIUM WARDEN</span>
+    </div>
+    <div class="rzp-seal">
+      <span>🔒 Secured by</span>
+      <span class="rzp-badge">Razorpay</span>
+    </div>
+  </header>
+
+  <!-- Checkout Container -->
+  <main class="checkout-container">
+
+    <!-- Left: Plan & Order Summary -->
+    <section class="summary-col">
+      <div class="sum-title">Order Summary</div>
+      
+      <div class="item-header">
+        <div class="item-icon">🔒</div>
+        <div class="item-details">
+          <h2>Warden Mode Subscription</h2>
+          <p>Uncompromising distraction lock for deep work</p>
+        </div>
+      </div>
+
+      <!-- Plan Switcher -->
+      <div class="plan-selector" id="planSelector">
+        <!-- Plan 1M -->
+        <div class="plan-opt" data-plan="plan_1m" data-price="99" data-months="1">
+          <div class="plan-opt-left">
+            <div class="plan-radio"></div>
+            <div>
+              <div class="plan-opt-name">1 Month</div>
+              <div class="plan-opt-sub">Short-term focus boost</div>
+            </div>
+          </div>
+          <div class="plan-opt-price">₹99</div>
+        </div>
+
+        <!-- Plan 2M (Default) -->
+        <div class="plan-opt active" data-plan="plan_2m" data-price="189" data-months="2">
+          <span class="badge-pop">Most Popular</span>
+          <div class="plan-opt-left">
+            <div class="plan-radio"></div>
+            <div>
+              <div class="plan-opt-name">2 Months</div>
+              <div class="plan-opt-sub">Complete exam & project cycle</div>
+            </div>
+          </div>
+          <div class="plan-opt-price">₹189</div>
+        </div>
+
+        <!-- Plan 12M -->
+        <div class="plan-opt" data-plan="plan_12m" data-price="799" data-months="12">
+          <div class="plan-opt-left">
+            <div class="plan-radio"></div>
+            <div>
+              <div class="plan-opt-name">12 Months (Annual)</div>
+              <div class="plan-opt-sub">Save 33% · Only ₹66/mo</div>
+            </div>
+          </div>
+          <div class="plan-opt-price">₹799</div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="benefits-box">
+        <div class="benefit-item"><span class="b-check">✓</span> Strict focus lockdown — no early exit</div>
+        <div class="benefit-item"><span class="b-check">✓</span> Blocklist editing disabled during session</div>
+        <div class="benefit-item"><span class="b-check">✓</span> Up to 4 hours uninterrupted focus</div>
+        <div class="benefit-item"><span class="b-check">✓</span> Priority deflection stats & streaks</div>
+      </div>
+
+      <!-- Price Breakdown -->
+      <div class="price-breakdown">
+        <div class="price-row">
+          <span>Subtotal</span>
+          <span id="sumSubtotal">₹189.00</span>
+        </div>
+        <div class="price-row">
+          <span>Tax / GST</span>
+          <span>₹0.00 (Inclusive)</span>
+        </div>
+        <div class="price-row total">
+          <span>Total Payable</span>
+          <span id="sumTotal">₹189.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Payment Gateway -->
+    <section class="gateway-col">
+      <div class="gateway-header">
+        <div class="gateway-title">Payment Options</div>
+        <div class="sec-badge">🛡️ 256-Bit SSL Encrypted</div>
+      </div>
+
+      <!-- Payment Method Tabs -->
+      <div class="pay-methods-tabs">
+        <button class="method-tab active" data-tab="upi">⚡ UPI</button>
+        <button class="method-tab" data-tab="card">💳 Card</button>
+        <button class="method-tab" data-tab="netbanking">🏦 Netbanking</button>
+        <button class="method-tab" data-tab="link">🔗 Payment Link</button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="tab-content-area">
+        <!-- UPI Tab -->
+        <div class="pay-pane active" id="paneUpi">
+          <div class="upi-apps-row">
+            <button class="upi-app-btn selected" data-app="gpay">
+              <span class="upi-icon-circle">🟢</span>
+              <span>GPay</span>
+            </button>
+            <button class="upi-app-btn" data-app="phonepe">
+              <span class="upi-icon-circle">🟣</span>
+              <span>PhonePe</span>
+            </button>
+            <button class="upi-app-btn" data-app="paytm">
+              <span class="upi-icon-circle">🔵</span>
+              <span>Paytm</span>
+            </button>
+            <button class="upi-app-btn" data-app="bhim">
+              <span class="upi-icon-circle">🟠</span>
+              <span>BHIM</span>
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label for="upiIdInput">Or Enter Any UPI ID (VPA)</label>
+            <input type="text" class="input-field" id="upiIdInput" placeholder="username@okhdfcbank" value="user@okhdfcbank">
+          </div>
+
+          <!-- Dynamic QR Code -->
+          <div class="qr-box">
+            <div class="qr-graphic" id="qrContainer">
+              <!-- Inline SVG QR simulation -->
+              <svg viewBox="0 0 29 29" width="64" height="64" fill="#111827">
+                <path d="M0,0 h7 v7 h-7 z M1,1 v5 h5 v-5 z M2,2 h3 v3 h-3 z"/>
+                <path d="M22,0 h7 v7 h-7 z M23,1 v5 h5 v-5 z M24,2 h3 v3 h-3 z"/>
+                <path d="M0,22 h7 v7 h-7 z M1,23 v5 h5 v-5 z M2,24 h3 v3 h-3 z"/>
+                <path d="M9,2 h2 v3 h-2 z M14,1 h3 v2 h-3 z M18,3 h2 v3 h-2 z M10,6 h4 v2 h-4 z"/>
+                <path d="M9,10 h2 v5 h-2 z M13,10 h4 v3 h-4 z M19,10 h3 v4 h-3 z M24,10 h3 v5 h-3 z"/>
+                <path d="M9,17 h4 v2 h-4 z M15,15 h3 v3 h-3 z M20,16 h4 v3 h-4 z M25,17 h2 v4 h-2 z"/>
+                <path d="M10,22 h3 v3 h-3 z M15,21 h4 v2 h-4 z M21,22 h3 v2 h-3 z M12,26 h5 v2 h-5 z"/>
+              </svg>
+            </div>
+            <div class="qr-info">
+              <h4>Scan & Pay with any UPI App</h4>
+              <p>Scan this QR using Google Pay, PhonePe, Paytm or BHIM to pay instantly.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Tab -->
+        <div class="pay-pane" id="paneCard">
+          <div class="form-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" class="input-field" id="cardNumber" placeholder="4532 •••• •••• 8892" maxlength="19" value="4532 8921 7734 8892">
+          </div>
+
+          <div class="card-row-split">
+            <div class="form-group">
+              <label for="cardExpiry">Valid Thru</label>
+              <input type="text" class="input-field" id="cardExpiry" placeholder="MM/YY" maxlength="5" value="10/28">
+            </div>
+            <div class="form-group">
+              <label for="cardCvv">CVV</label>
+              <input type="password" class="input-field" id="cardCvv" placeholder="•••" maxlength="4" value="789">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cardName">Name on Card</label>
+            <input type="text" class="input-field" id="cardName" placeholder="e.g. Rahul Sharma" value="Rahul Sharma">
+          </div>
+        </div>
+
+        <!-- Netbanking Tab -->
+        <div class="pay-pane" id="paneNetbanking">
+          <div class="form-group">
+            <label>Select Your Bank</label>
+            <div class="bank-grid">
+              <button class="bank-btn selected" data-bank="hdfc">HDFC Bank</button>
+              <button class="bank-btn" data-bank="sbi">State Bank of India</button>
+              <button class="bank-btn" data-bank="icici">ICICI Bank</button>
+              <button class="bank-btn" data-bank="axis">Axis Bank</button>
+              <button class="bank-btn" data-bank="kotak">Kotak Bank</button>
+              <button class="bank-btn" data-bank="other">Other Banks</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct Payment Link Tab -->
+        <div class="pay-pane" id="paneLink">
+          <div class="link-pane-info">
+            If you have a direct <strong>Razorpay Payment Link</strong> (e.g. <code>https://rzp.io/l/...</code>), you can enter it below or pay directly:
+          </div>
+          <div class="form-group">
+            <label for="customRzpLink">Custom Razorpay Link (Optional)</label>
+            <input type="url" class="input-field" id="customRzpLink" placeholder="https://rzp.io/l/calmscroll-warden">
+          </div>
+          <button class="bank-btn" id="openExternalLinkBtn" style="padding: 10px; background: rgba(82,143,240,0.15); border-color:#528FF0; color:#fff;">
+            🌐 Open Custom Link in New Tab
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button class="pay-cta-btn" id="payBtn">
+        <span>Pay ₹189 via Razorpay</span>
+        <span>→</span>
+      </button>
+
+      <!-- Trust Badges -->
+      <div class="footer-guarantee">
+        <span>🛡️ PCI-DSS Level 1</span>
+        <span>·</span>
+        <span>⚡ Instant Activation</span>
+        <span>·</span>
+        <span>🔄 Cancel Anytime</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Overlay: Processing / Success -->
+  <div class="process-overlay" id="processOverlay">
+    <div class="process-card" id="processCard">
+      <!-- Loading State -->
+      <div id="loadingState">
+        <div class="spinner"></div>
+        <h3 style="font-size: 18px; margin-bottom: 6px;" id="loadingTitle">Processing Payment...</h3>
+        <p style="font-size: 13px; color: #8B949E;" id="loadingSub">Communicating securely with Razorpay gateway</p>
+      </div>
+
+      <!-- Success State -->
+      <div id="successState" style="display: none;">
+        <div class="success-icon">✓</div>
+        <h3 style="font-size: 20px; color: #FFFFFF; margin-bottom: 6px;">Payment Successful!</h3>
+        <p style="font-size: 13px; color: #10B981; font-weight: 600; margin-bottom: 12px;">Warden Mode is now fully activated</p>
+        
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; font-size: 12px; text-align: left; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <span style="color: #8B949E;">Payment ID:</span>
+            <span style="color: #FFFFFF; font-family: monospace;" id="succPayId">pay_RZP8921471</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+            <span style="color: #8B949E;">Plan:</span>
+            <span style="color: #FFFFFF;" id="succPlan">2 Months Warden Pass</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: #8B949E;">Valid Until:</span>
+            <span style="color: #10B981; font-weight: 600;" id="succExpiry">Dec 24, 2026</span>
+          </div>
+        </div>
+
+        <button class="modal-btn" id="finishBtn">Return to CalmScroll & Start Focus Session</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="payment.js"></script>
+</body>
+</html>
