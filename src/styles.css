@@ -148,53 +148,6 @@
   33% { border-radius: 63% 37% 41% 59% / 58% 36% 64% 42%; transform: translate(30px,-20px) rotate(60deg); }
   66% { border-radius: 37% 63% 55% 45% / 45% 62% 38% 55%; transform: translate(-25px,15px) rotate(120deg); }
 }
-
-/* Pointer navigation */
-html.cursor-custom,
-html.cursor-custom * { cursor: none !important; }
-
-.cursor-dot,
-.cursor-ring,
-.cursor-glow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 200;
-  pointer-events: none;
-  opacity: 0;
-  will-change: transform;
-}
-.cursor-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 9999px;
-  background: var(--accent);
-  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 80%, transparent), 0 0 4px color-mix(in oklab, var(--glow) 70%, transparent);
-  transition: opacity .3s ease, width .2s ease, height .2s ease;
-}
-.cursor-dot.cursor-hot { width: 5px; height: 5px; }
-.cursor-ring {
-  width: 34px;
-  height: 34px;
-  border-radius: 9999px;
-  border: 1.5px solid color-mix(in oklab, var(--accent) 75%, transparent);
-  transition: opacity .3s ease, width .25s ease, height .25s ease, background .25s ease, border-color .25s ease;
-}
-.cursor-ring.cursor-hot {
-  width: 56px;
-  height: 56px;
-  border-color: color-mix(in oklab, var(--glow) 85%, transparent);
-  background: color-mix(in oklab, var(--glow) 14%, transparent);
-}
-.cursor-glow {
-  width: 320px;
-  height: 320px;
-  border-radius: 9999px;
-  background: radial-gradient(circle, color-mix(in oklab, var(--glow) 22%, transparent), color-mix(in oklab, var(--accent) 10%, transparent) 45%, transparent 70%);
-  filter: blur(24px);
-  transition: opacity .5s ease;
-}
-
 @utility glass-dark {
   background: linear-gradient(135deg, color-mix(in oklab, var(--primary-foreground) 14%, transparent), color-mix(in oklab, var(--primary-foreground) 4%, transparent)) !important;
   &::after { background: linear-gradient(115deg, transparent 35%, color-mix(in oklab, var(--primary-foreground) 12%, transparent) 50%, transparent 65%) !important; background-size: 250% 100%; }

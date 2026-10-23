@@ -10,9 +10,6 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
-import { PointerCursor } from "@/components/PointerCursor";
-
-
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -120,10 +117,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <PointerCursor />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-
     </QueryClientProvider>
   );
 }
