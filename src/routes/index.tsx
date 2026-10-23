@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteNav";
 import { LiveSimulator } from "@/components/LiveSimulator";
+import { TwoModes } from "@/components/TwoModes";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -14,11 +15,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const stats = [
-  ["2h 23m", "average daily time on social feeds"],
-  ["6×", "more engagement on outrage-driven posts"],
-  ["1 in 2", "people feel worse after scrolling"],
-];
 
 const steps = [
   ["01", "Notice", "CalmScroll tracks time on feeds and sends soft, timely nudges before minutes turn into hours."],
@@ -65,20 +61,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <h2 className="reveal font-display text-4xl md:text-5xl">Why it matters</h2>
-        <p className="mt-4 max-w-2xl text-muted-foreground">
-          Feeds are engineered to keep you outraged and scrolling. Your attention — and your mood — pay the price.
-        </p>
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {stats.map(([n, l]) => (
-            <div key={l} className="reveal lift rounded-2xl border bg-card p-8">
-              <div className="font-display text-5xl text-primary">{n}</div>
-              <p className="mt-3 text-sm text-muted-foreground">{l}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <TwoModes />
 
       <section id="how" className="mx-auto max-w-6xl px-6 py-20">
         <h2 className="reveal font-display text-4xl md:text-5xl">How it works</h2>
