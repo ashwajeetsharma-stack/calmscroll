@@ -2,6 +2,8 @@
 
 > **Focus & Mindful Browsing Platform** — A calm, low-stimulation companion that shields your focus against digital distractions, provocative ragebait, and endless scrolling.
 
+**Live Website**: [https://calmscroll.lovable.app](https://calmscroll.lovable.app)
+
 ---
 
 ## 📁 Repository Structure
@@ -19,13 +21,17 @@ calmscroll/
 │   ├── reset.html         # 2-minute box breathing reset
 │   ├── payment.html       # Secure checkout flow
 │   └── README.md          # Detailed extension documentation
+├── src/                   # CalmScroll Web App source code (React + TypeScript)
+├── public/                # Web App static assets
+├── package.json           # Web App dependencies and scripts
+├── vite.config.ts         # Vite build configuration
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-## 🧩 Chrome Extension Overview
+## 🧩 Chrome Extension (in `/extension`)
 
 The extension protects your focus during work and study sessions:
 
@@ -45,3 +51,20 @@ The extension protects your focus during work and study sessions:
 4. Pin CalmScroll to your toolbar for instant access.
 
 For detailed extension architecture, see [extension/README.md](extension/README.md).
+
+---
+
+## 🌐 Web Application (in `/`)
+
+The web app is built with React, TypeScript, Vite, and Tailwind CSS.
+
+### Running the Web App Locally
+
+```sh
+npm install
+npm run dev
+```
+
+### Build with Lovable
+
+Continue developing the web app in the [Lovable editor](https://lovable.dev/projects/6e9ca0d2-a194-4f77-be15-f6d5e199360a). Changes committed straight to `main` sync back automatically.
