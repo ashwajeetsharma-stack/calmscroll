@@ -37,12 +37,13 @@ export function PointerCursor() {
     let glowX = -100;
     let glowY = -100;
     let shown = false;
-    let magnet: Element | null = null;
+    let magnet: HTMLElement | null = null;
     let raf = 0;
 
     const setMagnet = (next: Element | null, mx: number, my: number) => {
-      if (magnet && magnet !== next) magnet.style.transform = "";
-      magnet = next;
+      const el = next instanceof HTMLElement ? next : null;
+      if (magnet && magnet !== el) magnet.style.transform = "";
+      magnet = el;
       if (magnet) {
         const rect = magnet.getBoundingClientRect();
         const dx = mx - (rect.left + rect.width / 2);
