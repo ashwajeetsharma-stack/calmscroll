@@ -4,7 +4,7 @@ export function SiteNav() {
   return (
     <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
       <Link to="/" className="font-display text-2xl tracking-tight">
-        Stillwave<span className="text-accent">.</span>
+        CalmScroll<span className="text-accent">.</span>
       </Link>
       <Link
         to="/download"
@@ -19,7 +19,7 @@ export function SiteNav() {
 export function SiteFooter() {
   return (
     <footer className="mx-auto max-w-6xl border-t px-6 py-10 text-sm text-muted-foreground">
-      © {new Date().getFullYear()} Stillwave — scroll less, live more.
+      © {new Date().getFullYear()} CalmScroll — scroll less, live more.
     </footer>
   );
 }

@@ -5,10 +5,10 @@ import { SiteNav, SiteFooter } from "@/components/SiteNav";
 export const Route = createFileRoute("/download")({
   head: () => ({
     meta: [
-      { title: "Download Stillwave for Chrome, Safari or Brave" },
-      { name: "description", content: "Choose your browser and install Stillwave, the AI extension for calmer browsing." },
-      { property: "og:title", content: "Download Stillwave" },
-      { property: "og:description", content: "Install Stillwave on Chrome, Safari or Brave." },
+      { title: "Download CalmScroll for Chrome, Safari or Brave" },
+      { name: "description", content: "Choose your browser and install CalmScroll, the AI extension for calmer browsing." },
+      { property: "og:title", content: "Download CalmScroll" },
+      { property: "og:description", content: "Install CalmScroll on Chrome, Safari or Brave." },
     ],
   }),
   component: Download,
@@ -31,7 +31,7 @@ function Download() {
       <SiteNav />
       <main className="relative mx-auto max-w-3xl px-6 py-20 text-center">
         <div className="orb pointer-events-none absolute left-1/2 top-0 -z-10 h-80 w-80 -translate-x-1/2 rounded-full" />
-        <h1 className="font-display text-6xl md:text-7xl">Get Stillwave</h1>
+        <h1 className="font-display text-6xl md:text-7xl">Get CalmScroll</h1>
         <p className="mt-4 text-muted-foreground">Choose your browser.</p>
 
         <div className="mt-12 grid grid-cols-3 gap-4">
