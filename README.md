@@ -1,7 +1,6 @@
 # CalmScroll
 
-ok so i wanna create a website or a webpage for my extension which  is an AI-powered browser extension that fights doomscrolling through timely screen-time reminders and a focus-driven digital environment. It detects and neutralizes ragebait and insensitive content, so browsing is calmer, healthier, and more intentions now i wanna create a website from where a user can download this extension now the website should be very minimal very eyecatching and aesthetic also for the contents the website shoukd explain the need for the extension and the working model and like i wanna add user reviews to the site and success stories and appraisals of the website add options to downlaod the extension and also add options to like decide for which browser do you need the extention chrome or safari or brave also build the website's download section as a placeholder that I will connect to the actual extension later
-
+CalmScroll is an AI-powered browser extension that combats doomscrolling through timely screen-time reminders and a focus-driven digital environment. It helps users stay aligned with their goals while detecting and neutralizing ragebait and insensitive content, creating a calmer, healthier, and more intentional online experience. 
 This project was built with [Lovable](https://lovable.dev).
 
 **Live app**: https://calmscroll.lovable.app
