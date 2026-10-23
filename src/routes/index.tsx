@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteNav";
+import { LiveSimulator } from "@/components/LiveSimulator";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -91,6 +92,8 @@ function Index() {
           ))}
         </div>
       </section>
+
+      <LiveSimulator />
 
       <section className="bg-primary py-24 text-primary-foreground">
         <div className="mx-auto max-w-6xl px-6">
