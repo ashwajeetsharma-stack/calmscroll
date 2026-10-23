@@ -41,4 +41,5 @@ build/
 
 # Builds and archives
 *.zip
+!public/*.zip
 !public/downloads/*.zip

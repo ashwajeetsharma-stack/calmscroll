@@ -3,7 +3,6 @@ import { SiteNav, SiteFooter } from "@/components/SiteNav";
 import { LiveSimulator } from "@/components/LiveSimulator";
 import { TwoModes } from "@/components/TwoModes";
 import { ChromeIcon, BraveIcon } from "@/components/BrowserIcons";
-import { ArrowDownToLine } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,21 +24,32 @@ const steps = [
 ];
 
 const reviews = [
-  ["“It’s like someone dimmed the noise of the internet.”", "Priya S.", "Designer"],
-  ["“The reminders are kind, not naggy. I actually listen to them.”", "Marcus L.", "Student"],
-  ["“My Twitter feed went from angry to almost pleasant.”", "Elena R.", "Journalist"],
+  ["I reclaimed nearly two hours every single day.", "Maya L.", "Software Engineer"],
+  ["The calm theme alone dropped my evening screen anxiety in half.", "Daniel K.", "Writer"],
+  ["The subtle AI blur made me realize how much anger I was casually ingesting.", "Priya N.", "Designer"],
 ];
 
 const stories = [
-  ["Aarav got 11 hours back a week", "A software engineer who used to lose evenings to short videos. With focus mode on, he finished a side project he’d shelved for two years."],
-  ["Sofia stopped doom-reading the news", "Ragebait filtering let her stay informed without the anxiety spiral. She now reads headlines in five calm minutes each morning."],
+  ["From 4h daily feed time to 45 focused minutes", "How a lead engineer decoupled deep work from endless Twitter and Hacker News checking."],
+  ["Finishing the book I’ve been putting off for two years", "A researcher swapped late-night doom-scrolling for 30 pages of fiction every night."],
 ];
 
 const press = [
-  ["“One of the most thoughtful wellbeing tools this year.”", "Product Weekly"],
-  ["“A quiet revolt against the attention economy.”", "The Digital Review"],
-  ["“Finally, an extension that respects your mind.”", "Mindful Tech"],
+  ["“A quiet antidote to an intentionally addictive internet.”", "Mindful Tech Review"],
+  ["“The rare anti-distraction tool that doesn’t feel like a punishment.”", "The Daily Focus"],
+  ["“Subtle, beautiful, and remarkably effective.”", "Quiet Web Weekly"],
 ];
+
+function triggerDownload(url: string, filename: string) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", filename);
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 function Index() {
   return (
@@ -56,22 +66,22 @@ function Index() {
           CalmScroll fights doomscrolling with gentle reminders and AI that neutralizes ragebait — so the internet feels calm again.
         </p>
         <div className="fade-up mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href="/downloads/calmscroll-chrome.zip"
-            download="calmscroll-chrome.zip"
-            className="inline-flex items-center gap-2.5 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
+          <button
+            type="button"
+            onClick={() => triggerDownload("/calmscroll-chrome.zip", "calmscroll-chrome.zip")}
+            className="inline-flex items-center gap-2.5 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 cursor-pointer"
           >
             <ChromeIcon className="h-4 w-4" />
             <span>Download for Chrome</span>
-          </a>
-          <a
-            href="/downloads/calmscroll-brave.zip"
-            download="calmscroll-brave.zip"
-            className="inline-flex items-center gap-2.5 rounded-full bg-card border border-border/80 px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted"
+          </button>
+          <button
+            type="button"
+            onClick={() => triggerDownload("/calmscroll-brave.zip", "calmscroll-brave.zip")}
+            className="inline-flex items-center gap-2.5 rounded-full bg-card border border-border/80 px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted cursor-pointer"
           >
             <BraveIcon className="h-4 w-4" />
             <span>Download for Brave</span>
-          </a>
+          </button>
           <Link
             to="/download"
             className="glass glass-border inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium transition hover:scale-105"
@@ -149,22 +159,22 @@ function Index() {
             Download the extension for Chrome or Brave and regain focus today.
           </p>
           <div className="relative mt-8 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="/downloads/calmscroll-chrome.zip"
-              download="calmscroll-chrome.zip"
-              className="inline-flex items-center gap-2.5 rounded-full bg-background px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95 hover:scale-105"
+            <button
+              type="button"
+              onClick={() => triggerDownload("/calmscroll-chrome.zip", "calmscroll-chrome.zip")}
+              className="inline-flex items-center gap-2.5 rounded-full bg-background px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95 hover:scale-105 cursor-pointer"
             >
               <ChromeIcon className="h-4 w-4" />
               <span>Download for Chrome</span>
-            </a>
-            <a
-              href="/downloads/calmscroll-brave.zip"
-              download="calmscroll-brave.zip"
-              className="inline-flex items-center gap-2.5 rounded-full bg-background/90 px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95 hover:scale-105"
+            </button>
+            <button
+              type="button"
+              onClick={() => triggerDownload("/calmscroll-brave.zip", "calmscroll-brave.zip")}
+              className="inline-flex items-center gap-2.5 rounded-full bg-background/90 px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95 hover:scale-105 cursor-pointer"
             >
               <BraveIcon className="h-4 w-4" />
               <span>Download for Brave</span>
-            </a>
+            </button>
             <Link
               to="/download"
               className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 px-6 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-primary-foreground/10"

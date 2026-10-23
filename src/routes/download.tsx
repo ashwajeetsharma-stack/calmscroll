@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteNav, SiteFooter } from "@/components/SiteNav";
 import { ChromeIcon, BraveIcon } from "@/components/BrowserIcons";
-import { ArrowDownToLine, Check, Copy, ExternalLink, HelpCircle, ShieldCheck, Sparkles, Terminal } from "lucide-react";
+import { ArrowDownToLine, Check, Copy, ExternalLink, ShieldCheck, Sparkles, Terminal } from "lucide-react";
 
 export const Route = createFileRoute("/download")({
   head: () => ({
@@ -36,7 +36,7 @@ const browserList: BrowserOption[] = [
     name: "Google Chrome",
     shortName: "Chrome",
     icon: ChromeIcon,
-    downloadUrl: "/downloads/calmscroll-chrome.zip",
+    downloadUrl: "/calmscroll-chrome.zip",
     fileName: "calmscroll-chrome.zip",
     version: "v0.2.0 (Manifest V3)",
     size: "97 KB",
@@ -49,7 +49,7 @@ const browserList: BrowserOption[] = [
     name: "Brave Browser",
     shortName: "Brave",
     icon: BraveIcon,
-    downloadUrl: "/downloads/calmscroll-brave.zip",
+    downloadUrl: "/calmscroll-brave.zip",
     fileName: "calmscroll-brave.zip",
     version: "v0.2.0 (Manifest V3)",
     size: "97 KB",
@@ -65,6 +65,14 @@ function Download() {
 
   const handleDownload = (b: BrowserOption) => {
     setDownloadedBrowser(b.id);
+    const link = document.createElement("a");
+    link.href = b.downloadUrl;
+    link.setAttribute("download", b.fileName);
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleCopyUrl = (url: string) => {
@@ -131,20 +139,19 @@ function Download() {
                 </div>
 
                 <div className="mt-8 border-t border-border/40 pt-6">
-                  <a
-                    href={b.downloadUrl}
-                    download={b.fileName}
+                  <button
+                    type="button"
                     onClick={() => handleDownload(b)}
-                    className="flex w-full items-center justify-center gap-2.5 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-95 hover:shadow"
+                    className="flex w-full items-center justify-center gap-2.5 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-95 hover:shadow cursor-pointer"
                   >
                     <ArrowDownToLine className="h-4 w-4" />
                     Download for {b.shortName}
-                  </a>
+                  </button>
 
                   {isDownloaded && (
                     <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-primary font-medium">
                       <Check className="h-3.5 w-3.5" />
-                      <span>Download started! Follow the 3 steps below to load.</span>
+                      <span>Download initiated! Follow the 3 steps below to load.</span>
                     </div>
                   )}
                 </div>
@@ -188,7 +195,7 @@ function Download() {
                 <button
                   type="button"
                   onClick={() => handleCopyUrl("chrome://extensions")}
-                  className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-medium text-primary hover:underline"
+                  className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-medium text-primary hover:underline cursor-pointer"
                 >
                   <Copy className="h-3 w-3" />
                   <span>{copiedUrl === "chrome://extensions" ? "Copied!" : "Copy extensions URL"}</span>
