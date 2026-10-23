@@ -5,10 +5,10 @@ import { SiteNav, SiteFooter } from "@/components/SiteNav";
 export const Route = createFileRoute("/download")({
   head: () => ({
     meta: [
-      { title: "Download CalmScroll for Chrome, Safari or Brave" },
+      { title: "Download CalmScroll for Chrome or Brave" },
       { name: "description", content: "Choose your browser and install CalmScroll, the AI extension for calmer browsing." },
       { property: "og:title", content: "Download CalmScroll" },
-      { property: "og:description", content: "Install CalmScroll on Chrome, Safari or Brave." },
+      { property: "og:description", content: "Install CalmScroll on Chrome or Brave." },
     ],
   }),
   component: Download,
@@ -17,7 +17,6 @@ export const Route = createFileRoute("/download")({
 // TODO: replace each url with the real store listing when the extension is published.
 const browsers = [
   { id: "chrome", name: "Chrome", store: "Chrome Web Store", url: "#" },
-  { id: "safari", name: "Safari", store: "Mac App Store", url: "#" },
   { id: "brave", name: "Brave", store: "Chrome Web Store (works on Brave)", url: "#" },
 ];
 
@@ -34,7 +33,7 @@ function Download() {
         <h1 className="font-display text-6xl md:text-7xl">Get CalmScroll</h1>
         <p className="mt-4 text-muted-foreground">Choose your browser.</p>
 
-        <div className="mt-12 grid grid-cols-3 gap-4">
+        <div className="mt-12 grid grid-cols-2 gap-4">
           {browsers.map((x) => (
             <button
               key={x.id}
