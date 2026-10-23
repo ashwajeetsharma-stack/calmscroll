@@ -45,7 +45,7 @@ function Index() {
       <SiteNav />
 
       <section className="relative mx-auto max-w-6xl px-6 pb-28 pt-20 text-center">
-        <div className="orb pointer-events-none absolute left-1/2 top-10 -z-10 h-96 w-96 -translate-x-1/2 rounded-full" /><div className="orb float pointer-events-none absolute right-0 top-40 -z-10 h-48 w-48 rounded-full" /><div className="orb float pointer-events-none absolute left-0 bottom-10 -z-10 h-40 w-40 rounded-full" />
+        <div className="liquid pointer-events-none absolute -left-10 top-0 -z-10 h-80 w-80" /><div className="liquid pointer-events-none absolute -right-10 bottom-0 -z-10 h-72 w-72" style={{ animationDelay: "-6s" }} /><div className="orb pointer-events-none absolute left-1/2 top-10 -z-10 h-96 w-96 -translate-x-1/2 rounded-full" /><div className="orb float pointer-events-none absolute right-0 top-40 -z-10 h-48 w-48 rounded-full" /><div className="orb float pointer-events-none absolute left-0 bottom-10 -z-10 h-40 w-40 rounded-full" />
         <p className="fade-up text-sm uppercase tracking-[0.3em] text-muted-foreground">AI browser extension</p>
         <h1 className="fade-up mx-auto mt-6 max-w-4xl font-display text-6xl leading-[1.02] md:text-8xl">
           Scroll less. <em className="shimmer-text pr-2">Feel</em> more.
@@ -57,7 +57,7 @@ function Index() {
           <Link to="/download" className="rounded-full bg-primary px-7 py-3 text-primary-foreground transition hover:opacity-90">
             Get CalmScroll — free
           </Link>
-          <a href="#how" className="rounded-full border px-7 py-3 transition hover:bg-muted">How it works</a>
+          <a href="#how" className="glass glass-border rounded-full px-7 py-3 transition hover:scale-105">How it works</a>
         </div>
       </section>
 
@@ -67,7 +67,7 @@ function Index() {
         <h2 className="reveal font-display text-4xl md:text-5xl">How it works</h2>
         <div className="mt-12 grid gap-10 md:grid-cols-3">
           {steps.map(([n, t, d]) => (
-            <div key={n} className="reveal lift rounded-2xl border-t-4 border-accent bg-card p-6">
+            <div key={n} className="reveal lift glass glass-border rounded-2xl p-6">
               <span className="text-sm text-accent">{n}</span>
               <h3 className="mt-2 font-display text-3xl">{t}</h3>
               <p className="mt-3 text-muted-foreground">{d}</p>
@@ -78,15 +78,16 @@ function Index() {
 
       <LiveSimulator />
 
-      <section className="bg-primary py-24 text-primary-foreground">
-        <div className="mx-auto max-w-6xl px-6">
+      <section className="relative overflow-hidden bg-primary py-24 text-primary-foreground">
+        <div className="liquid pointer-events-none absolute left-1/3 top-10 h-96 w-96 opacity-60" />
+        <div className="relative mx-auto max-w-6xl px-6">
           <h2 className="reveal font-display text-4xl md:text-5xl">Loved by calmer people</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {reviews.map(([q, n, r]) => (
-              <figure key={n} className="reveal lift rounded-2xl bg-card p-8 text-card-foreground">
+              <figure key={n} className="reveal lift glass glass-border rounded-2xl p-8">
                 <div className="text-accent">★★★★★</div>
                 <blockquote className="mt-4 font-display text-2xl leading-snug">{q}</blockquote>
-                <figcaption className="mt-6 text-sm text-muted-foreground">{n} · {r}</figcaption>
+                <figcaption className="mt-6 text-sm opacity-75">{n} · {r}</figcaption>
               </figure>
             ))}
           </div>
@@ -97,7 +98,7 @@ function Index() {
         <h2 className="reveal font-display text-4xl md:text-5xl">Success stories</h2>
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {stories.map(([t, d]) => (
-            <article key={t} className="reveal lift rounded-2xl border bg-gradient-to-br from-card to-secondary p-10">
+            <article key={t} className="reveal lift glass deco-frame rounded-2xl p-10">
               <h3 className="font-display text-3xl">{t}</h3>
               <p className="mt-4 text-muted-foreground">{d}</p>
             </article>
@@ -109,7 +110,7 @@ function Index() {
         <p className="text-center text-sm uppercase tracking-[0.3em] text-muted-foreground">In the press</p>
         <div className="mt-10 grid gap-10 text-center md:grid-cols-3">
           {press.map(([q, s]) => (
-            <div key={s}>
+            <div key={s} className="glass deco-frame rounded-2xl p-6">
               <p className="font-display text-2xl italic">{q}</p>
               <p className="mt-3 text-sm font-medium">{s}</p>
             </div>
@@ -118,7 +119,7 @@ function Index() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="relative overflow-hidden rounded-3xl bg-primary px-8 py-20 text-center text-primary-foreground">
+        <div className="glass-border relative overflow-hidden rounded-3xl bg-primary px-8 py-20 text-center text-primary-foreground">
           <div className="orb absolute -right-20 -top-20 h-72 w-72 rounded-full" />
           <h2 className="relative font-display text-5xl md:text-6xl">Take back your attention.</h2>
           <Link to="/download" className="relative mt-8 inline-block rounded-full bg-background px-8 py-3 text-foreground transition hover:opacity-90">
