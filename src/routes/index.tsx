@@ -84,7 +84,7 @@ function Index() {
           <h2 className="reveal font-display text-4xl md:text-5xl">Loved by calmer people</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {reviews.map(([q, n, r]) => (
-              <figure key={n} className="reveal lift glass glass-border rounded-2xl p-8">
+              <figure key={n} className="reveal lift glass glass-dark glass-border rounded-2xl p-8">
                 <div className="text-accent">★★★★★</div>
                 <blockquote className="mt-4 font-display text-2xl leading-snug">{q}</blockquote>
                 <figcaption className="mt-6 text-sm opacity-75">{n} · {r}</figcaption>

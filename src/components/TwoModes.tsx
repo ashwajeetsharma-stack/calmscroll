@@ -84,7 +84,7 @@ function WardenModeCard() {
           ride early.
         </p>
 
-        <div className="mt-6 glass rounded-2xl p-6 text-center">
+        <div className="mt-6 glass glass-dark rounded-2xl p-6 text-center">
           <p className="text-xs uppercase tracking-[0.3em] opacity-70">Focus session ends in</p>
           <div className="mt-2">
             <Countdown />
