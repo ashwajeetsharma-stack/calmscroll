@@ -36,26 +36,26 @@
 
 :root {
   --radius: 1rem;
-  --background: oklch(0.975 0.012 85);
-  --foreground: oklch(0.24 0.03 160);
-  --card: oklch(0.99 0.008 85);
-  --card-foreground: oklch(0.24 0.03 160);
-  --popover: oklch(0.99 0.008 85);
-  --popover-foreground: oklch(0.24 0.03 160);
-  --primary: oklch(0.36 0.06 160);
-  --primary-foreground: oklch(0.975 0.012 85);
-  --secondary: oklch(0.93 0.025 140);
-  --secondary-foreground: oklch(0.3 0.05 160);
-  --muted: oklch(0.94 0.015 85);
-  --muted-foreground: oklch(0.5 0.025 160);
-  --accent: oklch(0.78 0.11 55);
-  --accent-foreground: oklch(0.24 0.03 160);
+  --background: oklch(0.97 0.02 85);
+  --foreground: oklch(0.25 0.07 262);
+  --card: oklch(0.99 0.012 85);
+  --card-foreground: oklch(0.25 0.07 262);
+  --popover: oklch(0.99 0.012 85);
+  --popover-foreground: oklch(0.25 0.07 262);
+  --primary: oklch(0.3 0.1 262);
+  --primary-foreground: oklch(0.97 0.02 85);
+  --secondary: oklch(0.93 0.035 80);
+  --secondary-foreground: oklch(0.3 0.1 262);
+  --muted: oklch(0.94 0.02 85);
+  --muted-foreground: oklch(0.48 0.05 262);
+  --accent: oklch(0.76 0.13 65);
+  --accent-foreground: oklch(0.25 0.07 262);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.88 0.02 110);
-  --input: oklch(0.88 0.02 110);
-  --ring: oklch(0.36 0.06 160);
-  --glow: oklch(0.85 0.09 150);
+  --border: oklch(0.87 0.03 85);
+  --input: oklch(0.87 0.03 85);
+  --ring: oklch(0.3 0.1 262);
+  --glow: oklch(0.65 0.14 250);
 }
 
 @layer base {
@@ -86,3 +86,14 @@
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: none; }
 }
+
+@utility float { animation: floaty 6s ease-in-out infinite; }
+@utility lift { transition: transform .4s ease, box-shadow .4s ease; &:hover { transform: translateY(-6px) rotate(-.5deg); box-shadow: 0 20px 40px -20px var(--primary); } }
+@utility shimmer-text {
+  background: linear-gradient(90deg, var(--primary), var(--glow), var(--accent), var(--primary));
+  background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+@utility reveal { animation: fadeUp 1s ease-out both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@keyframes shimmer { to { background-position: 300% 0; } }
