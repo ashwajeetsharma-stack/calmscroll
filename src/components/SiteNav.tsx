@@ -2,7 +2,8 @@ import { Link } from "@tanstack/react-router";
 
 export function SiteNav() {
   return (
-    <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+    <header className="sticky top-4 z-50 mx-auto mt-4 max-w-6xl px-4">
+      <div className="glass glass-border flex items-center justify-between rounded-full px-6 py-3">
       <Link to="/" className="font-display text-2xl tracking-tight">
         CalmScroll<span className="text-accent">.</span>
       </Link>
@@ -12,6 +13,7 @@ export function SiteNav() {
       >
         Download
       </Link>
+      </div>
     </header>
   );
 }

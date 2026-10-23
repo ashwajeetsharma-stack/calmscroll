@@ -24,7 +24,7 @@ function Countdown() {
 
 function NormalModeCard() {
   return (
-    <article className="reveal lift relative overflow-hidden rounded-3xl border bg-card p-8">
+    <article className="reveal lift glass glass-border rounded-3xl p-8">
       <div className="orb pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full" />
       <div className="relative">
         <div className="flex items-center gap-3">
@@ -69,7 +69,7 @@ function WardenModeCard() {
   };
 
   return (
-    <article className="reveal lift relative overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground">
+    <article className="reveal lift glass-border relative overflow-hidden rounded-3xl bg-primary p-8 text-primary-foreground">
       <div className="orb pointer-events-none absolute -left-16 -bottom-16 h-48 w-48 rounded-full" />
       <div className="relative">
         <div className="flex items-center gap-3">
@@ -84,7 +84,7 @@ function WardenModeCard() {
           ride early.
         </p>
 
-        <div className="mt-6 rounded-2xl border border-primary-foreground/20 bg-primary-foreground/5 p-6 text-center">
+        <div className="mt-6 glass glass-dark rounded-2xl p-6 text-center">
           <p className="text-xs uppercase tracking-[0.3em] opacity-70">Focus session ends in</p>
           <div className="mt-2">
             <Countdown />
