@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav, SiteFooter } from "@/components/SiteNav";
 import { LiveSimulator } from "@/components/LiveSimulator";
 import { TwoModes } from "@/components/TwoModes";
+import { ChromeIcon, BraveIcon } from "@/components/BrowserIcons";
+import { ArrowDownToLine } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -53,11 +55,32 @@ function Index() {
         <p className="fade-up mx-auto mt-8 max-w-xl text-lg font-light text-muted-foreground">
           CalmScroll fights doomscrolling with gentle reminders and AI that neutralizes ragebait — so the internet feels calm again.
         </p>
-        <div className="fade-up mt-10 flex justify-center gap-3">
-          <Link to="/download" className="rounded-full bg-primary px-7 py-3 text-primary-foreground transition hover:opacity-90">
-            Get CalmScroll — free
+        <div className="fade-up mt-10 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="/downloads/calmscroll-chrome.zip"
+            download="calmscroll-chrome.zip"
+            className="inline-flex items-center gap-2.5 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
+          >
+            <ChromeIcon className="h-4 w-4" />
+            <span>Download for Chrome</span>
+          </a>
+          <a
+            href="/downloads/calmscroll-brave.zip"
+            download="calmscroll-brave.zip"
+            className="inline-flex items-center gap-2.5 rounded-full bg-card border border-border/80 px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:bg-muted"
+          >
+            <BraveIcon className="h-4 w-4" />
+            <span>Download for Brave</span>
+          </a>
+          <Link
+            to="/download"
+            className="glass glass-border inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-medium transition hover:scale-105"
+          >
+            <span>Install Guide</span>
           </Link>
-          <a href="#how" className="glass glass-border rounded-full px-7 py-3 transition hover:scale-105">How it works</a>
+          <a href="#how" className="text-sm text-muted-foreground hover:text-foreground transition px-3 py-2">
+            How it works ↓
+          </a>
         </div>
       </section>
 
@@ -122,9 +145,33 @@ function Index() {
         <div className="glass-border relative overflow-hidden rounded-3xl bg-primary px-8 py-20 text-center text-primary-foreground">
           <div className="orb absolute -right-20 -top-20 h-72 w-72 rounded-full" />
           <h2 className="relative font-display text-5xl md:text-6xl">Take back your attention.</h2>
-          <Link to="/download" className="relative mt-8 inline-block rounded-full bg-background px-8 py-3 text-foreground transition hover:opacity-90">
-            Download CalmScroll
-          </Link>
+          <p className="relative mx-auto mt-4 max-w-lg text-primary-foreground/80">
+            Download the extension for Chrome or Brave and regain focus today.
+          </p>
+          <div className="relative mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href="/downloads/calmscroll-chrome.zip"
+              download="calmscroll-chrome.zip"
+              className="inline-flex items-center gap-2.5 rounded-full bg-background px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95 hover:scale-105"
+            >
+              <ChromeIcon className="h-4 w-4" />
+              <span>Download for Chrome</span>
+            </a>
+            <a
+              href="/downloads/calmscroll-brave.zip"
+              download="calmscroll-brave.zip"
+              className="inline-flex items-center gap-2.5 rounded-full bg-background/90 px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition hover:opacity-95 hover:scale-105"
+            >
+              <BraveIcon className="h-4 w-4" />
+              <span>Download for Brave</span>
+            </a>
+            <Link
+              to="/download"
+              className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/30 px-6 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-primary-foreground/10"
+            >
+              <span>Setup Guide</span>
+            </Link>
+          </div>
         </div>
       </section>
 
