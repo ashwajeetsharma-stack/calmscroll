@@ -149,6 +149,6 @@
   66% { border-radius: 37% 63% 55% 45% / 45% 62% 38% 55%; transform: translate(-25px,15px) rotate(120deg); }
 }
 @utility glass-dark {
-  background: linear-gradient(135deg, color-mix(in oklab, var(--primary-foreground) 14%, transparent), color-mix(in oklab, var(--primary-foreground) 4%, transparent));
-  &::after { background: linear-gradient(115deg, transparent 35%, color-mix(in oklab, var(--primary-foreground) 12%, transparent) 50%, transparent 65%); background-size: 250% 100%; }
+  background: linear-gradient(135deg, color-mix(in oklab, var(--primary-foreground) 14%, transparent), color-mix(in oklab, var(--primary-foreground) 4%, transparent)) !important;
+  &::after { background: linear-gradient(115deg, transparent 35%, color-mix(in oklab, var(--primary-foreground) 12%, transparent) 50%, transparent 65%) !important; background-size: 250% 100%; }
 }
